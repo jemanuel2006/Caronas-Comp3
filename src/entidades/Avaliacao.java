@@ -1,4 +1,4 @@
-package Entities;
+package entidades;
 
 public class Avaliacao {
 	private int _avaliacao;

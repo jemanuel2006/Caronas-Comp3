@@ -1,4 +1,4 @@
-package Entities;
+package entidades;
 
 public class Logradouro {
 	private String _cep;

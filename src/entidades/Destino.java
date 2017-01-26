@@ -1,4 +1,4 @@
-package Entities;
+package entidades;
 
 public class Destino extends Parada{
 

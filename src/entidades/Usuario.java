@@ -1,10 +1,16 @@
-package Entities;
+package entidades;
 
 public class Usuario {
 	private String _nome;
 	private String _email;
 	private String _telefone;
 	
+	public Usuario(String _nome, String _email, String _telefone) {
+		this.set_nome(_nome);
+		this.set_email(_email);
+		this.set_telefone(_telefone);
+		
+	}
 	public String get_email() {
 		return _email;
 	}
