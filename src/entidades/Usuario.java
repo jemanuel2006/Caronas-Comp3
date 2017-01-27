@@ -4,11 +4,24 @@ public class Usuario {
 	private String _nome;
 	private String _email;
 	private String _telefone;
+	private int _id;
 	
-	public Usuario(String _nome, String _email, String _telefone) {
-		this.set_nome(_nome);
-		this.set_email(_email);
-		this.set_telefone(_telefone);
+	public Usuario(String nome, String email, String telefone) {
+		if(nome == null || nome.isEmpty()){
+			throw new IllegalArgumentException("nome");
+		}
+		
+		if(email == null || email.isEmpty()){
+			throw new IllegalArgumentException("email");
+		}
+		
+		if(telefone == null || telefone.isEmpty()){
+			throw new IllegalArgumentException("telefone");
+		}
+		
+		this.set_nome(nome);
+		this.set_email(email);
+		this.set_telefone(telefone);
 		
 	}
 	public String get_email() {
@@ -28,5 +41,11 @@ public class Usuario {
 	}
 	public void set_telefone(String _telefone) {
 		this._telefone = _telefone;
+	}
+	public int get_id() {
+		return _id;
+	}
+	public void set_id(int _id) {
+		this._id = _id;
 	}
 }

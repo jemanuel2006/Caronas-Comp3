@@ -1,0 +1,52 @@
+package TransactionScripts;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import entidades.Usuario;
+import persistencia.UsuarioGateway;
+import persistencia.UsuariosFinder;
+
+public class UsuariosScript {
+	public int CriarUsuario(String nome, String email, String telefone) throws Exception{
+		Usuario usuario = new Usuario(nome, email, telefone);
+		UsuarioGateway usuarioGateway = new UsuarioGateway(usuario);
+		int id = usuarioGateway.Insert();
+		usuario.set_id(id);
+		
+		return id;
+	}
+	
+	public void EditarUsuario(int id, String nome, String email, String telefone) throws Exception{
+		Usuario usuario = new Usuario(nome, email, telefone);
+		usuario.set_id(id);
+		UsuarioGateway usuarioGateway = new UsuarioGateway(usuario);
+		usuarioGateway.Save();
+	}
+	
+	public Usuario GetUsuario(int id) throws Exception{
+		UsuariosFinder finder = new UsuariosFinder();
+		UsuarioGateway u = finder.find(id);
+		return new Usuario(u.get_nome(), u.get_email(), u.get_telefone());
+	}
+	
+	public Collection<Usuario> GetAllUsuarios() throws Exception{
+		UsuariosFinder finder = new UsuariosFinder();
+		Collection<UsuarioGateway> usuariosGateway = finder.getAll();
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		
+		for(UsuarioGateway u : usuariosGateway){
+			Usuario usuario = new Usuario(u.get_nome(), u.get_email(), u.get_telefone());
+			usuario.set_id(u.get_id());
+			usuarios.add(usuario);
+		}
+		
+		return usuarios;
+	}
+	
+	public void DeletarUsuario(int id) throws Exception {
+		UsuariosFinder finder = new UsuariosFinder();
+		UsuarioGateway u = finder.find(id);
+		u.Delete();
+	}
+}
