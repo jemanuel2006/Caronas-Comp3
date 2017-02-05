@@ -6,19 +6,11 @@ public class Usuario {
 	private String _telefone;
 	private int _id;
 	
+	public Usuario(){
+		
+	}
+	
 	public Usuario(String nome, String email, String telefone) {
-		if(nome == null || nome.isEmpty()){
-			throw new IllegalArgumentException("nome");
-		}
-		
-		if(email == null || email.isEmpty()){
-			throw new IllegalArgumentException("email");
-		}
-		
-		if(telefone == null || telefone.isEmpty()){
-			throw new IllegalArgumentException("telefone");
-		}
-		
 		this.set_nome(nome);
 		this.set_email(email);
 		this.set_telefone(telefone);

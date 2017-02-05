@@ -9,6 +9,18 @@ import persistencia.UsuariosFinder;
 
 public class UsuariosScript {
 	public int CriarUsuario(String nome, String email, String telefone) throws Exception{
+		if(nome == null || nome.isEmpty()){
+			throw new IllegalArgumentException("nome");
+		}
+		
+		if(email == null || email.isEmpty()){
+			throw new IllegalArgumentException("email");
+		}
+		
+		if(telefone == null || telefone.isEmpty()){
+			throw new IllegalArgumentException("telefone");
+		}
+		
 		Usuario usuario = new Usuario(nome, email, telefone);
 		UsuarioGateway usuarioGateway = new UsuarioGateway(usuario);
 		int id = usuarioGateway.Insert();
@@ -17,10 +29,21 @@ public class UsuariosScript {
 		return id;
 	}
 	
-	public void EditarUsuario(int id, String nome, String email, String telefone) throws Exception{
-		Usuario usuario = new Usuario(nome, email, telefone);
-		usuario.set_id(id);
-		UsuarioGateway usuarioGateway = new UsuarioGateway(usuario);
+	public void EditarUsuario(int id, String nome, String telefone) throws Exception{
+		if(nome == null || nome.isEmpty()){
+			throw new IllegalArgumentException("nome");
+		}
+		
+		if(telefone == null || telefone.isEmpty()){
+			throw new IllegalArgumentException("telefone");
+		}
+		
+		UsuariosFinder finder = new UsuariosFinder();
+		UsuarioGateway usuarioGateway = finder.find(id);
+		
+		usuarioGateway.set_nome(nome);
+		usuarioGateway.set_telefone(telefone);
+		
 		usuarioGateway.Save();
 	}
 	

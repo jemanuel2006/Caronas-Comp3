@@ -13,6 +13,7 @@ import excecoes.EntidadeNaoEncontradaException;
 public class UsuariosFinder {
 	private final String _selectAllStatement = "SELECT * FROM usuario";
 	private final String _selectStatement = "SELECT * FROM usuario WHERE id = ?";
+	private final String _selectByEmailStatement = "SELECT * FROM usuario WHERE email = ?";
 	
 	public UsuarioGateway find(int id) throws Exception{
 		PreparedStatement selectStatement = null;
@@ -28,6 +29,31 @@ public class UsuariosFinder {
 			 if (usuarioSet.next()) {
                 Usuario u = new Usuario(usuarioSet.getString("nome"),usuarioSet.getString("email"), usuarioSet.getString("telefone"));
                 u.set_id(id);
+                gateway = new UsuarioGateway(u);
+			 } else {
+				 throw new EntidadeNaoEncontradaException();
+			 }
+			 
+			 return gateway;
+		 } finally {
+			dbConn.CloseConnection();
+		 }
+	}
+	
+	public UsuarioGateway find(String email) throws Exception{
+		PreparedStatement selectStatement = null;
+		DatabaseConnector dbConn = new DatabaseConnector();
+		 try {
+			 Connection s = dbConn.getConnection();
+			 selectStatement = s.prepareStatement(_selectByEmailStatement);
+			 selectStatement.setString(1, email);
+			 
+			 ResultSet usuarioSet = selectStatement.executeQuery();
+			 UsuarioGateway gateway = null;
+			 
+			 if (usuarioSet.next()) {
+                Usuario u = new Usuario(usuarioSet.getString("nome"),usuarioSet.getString("email"), usuarioSet.getString("telefone"));
+                u.set_id(usuarioSet.getInt("id"));
                 gateway = new UsuarioGateway(u);
 			 } else {
 				 throw new EntidadeNaoEncontradaException();

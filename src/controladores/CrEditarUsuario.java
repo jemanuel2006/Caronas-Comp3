@@ -47,12 +47,11 @@ public class CrEditarUsuario extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String nome = request.getParameter("_nome");
-			String email = request.getParameter("_email");
 			String telefone = request.getParameter("_telefone");
 			int id = Integer.parseInt(request.getParameter("_id"));
 			
 			UsuariosScript script = new UsuariosScript();
-			script.EditarUsuario(id, nome, email, telefone);
+			script.EditarUsuario(id, nome, telefone);
 			
 			response.sendRedirect("./EditarUsuario?id=" + id);
 		} catch (Exception e) {

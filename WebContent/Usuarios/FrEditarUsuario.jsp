@@ -20,7 +20,7 @@
 				</div>
 				<div class="form-group">
 					<label for="_email">* Email:</label>
-					<input type="email" name="_email" class="form-control" placeholder="Digite um email válido" value="${_email}" required>
+					<input type="email" name="_email" class="form-control" disabled value="${_email}" >
 				</div>
 				<div class="form-group">
 					<label for="_telefone">* Telefone:</label>

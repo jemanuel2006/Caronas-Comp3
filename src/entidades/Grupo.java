@@ -1,10 +1,22 @@
 package entidades;
 
 public class Grupo {
+	private int _id;
 	private String _nome;
 	private String _descricao;
 	private String _regras;
 	private int _limite;
+	
+	public Grupo(){
+		
+	}
+	
+	public Grupo(String nome, String descricao, String regras, int limite) {
+		this.set_nome(nome);
+		this.set_descricao(descricao);
+		this.set_regras(regras);
+		this.set_limite(limite);
+	}
 	
 	public String get_nome() {
 		return _nome;
@@ -29,5 +41,13 @@ public class Grupo {
 	}
 	public void set_limite(int _limite) {
 		this._limite = _limite;
+	}
+
+	public int get_id() {
+		return _id;
+	}
+
+	public void set_id(int _id) {
+		this._id = _id;
 	}
 }
