@@ -10,7 +10,7 @@ import persistencia.UsuariosFinder;
 import persistencia.GrupoFinder;
 
 public class GruposScript {
-	public int CriarGrupo(String nome, String descricao, String regras, int limite) throws Exception{
+	public int CriarGrupo(int _id, String nome, String descricao, String regras, int limite) throws Exception{
 		if(nome == null || nome.isEmpty()){
 			throw new IllegalArgumentException("nome");
 		}
@@ -83,5 +83,12 @@ public class GruposScript {
 		
 		associacaoGateway = new Usuario_GrupoGateway(u.get_id(), g.get_id());
 		associacaoGateway.Insert();
+	}
+
+	public void DeletarGrupo(int id) throws Exception {
+		GrupoFinder finder = new GrupoFinder();
+		GrupoGateway g = finder.find(id);
+		g.Delete();
+		
 	}
 }
