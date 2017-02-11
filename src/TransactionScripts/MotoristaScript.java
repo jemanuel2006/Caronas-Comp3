@@ -1,9 +1,11 @@
 package TransactionScripts;
 
+import excecoes.EntidadeNaoEncontradaException;
 import persistencia.MotoristaFinder;
 import persistencia.MotoristaGateway;
 import persistencia.UsuarioGateway;
 import persistencia.UsuariosFinder;
+import persistencia.VeiculoFinder;
 import persistencia.VeiculoGateway;
 
 public class MotoristaScript {
@@ -22,5 +24,17 @@ public class MotoristaScript {
 		vGateway.set_motoristaId(gateway.get_id());
 		
 		vGateway.Save();
+	}
+	
+	public void AlterarVeiculo(int id, String cor) throws Exception{
+		VeiculoFinder vFinder = new VeiculoFinder();
+		VeiculoGateway gateway = vFinder.find(id);
+		
+		if(gateway == null){
+			throw new EntidadeNaoEncontradaException();
+		}
+
+		gateway.set_cor(cor);
+		gateway.Save();
 	}
 }

@@ -98,6 +98,7 @@ public class GrupoGateway {
 			 updateStatement.setString(2, _descricao);
 			 updateStatement.setString(3, _regras);
 			 updateStatement.setInt(4, _limite);
+			 updateStatement.setInt(5, _id);
 			 
 			 int affectedRows = updateStatement.executeUpdate();
 			 if (affectedRows == 0) {
