@@ -1,11 +1,16 @@
 package entidades;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class Grupo {
 	private int _id;
 	private String _nome;
 	private String _descricao;
 	private String _regras;
 	private int _limite;
+	
+	private Collection<Usuario> _membros;
 	
 	public Grupo(){
 		
@@ -16,6 +21,8 @@ public class Grupo {
 		this.set_descricao(descricao);
 		this.set_regras(regras);
 		this.set_limite(limite);
+		
+		this._membros = new ArrayList<>();
 	}
 	
 	public String get_nome() {
@@ -49,5 +56,13 @@ public class Grupo {
 
 	public void set_id(int _id) {
 		this._id = _id;
+	}
+	
+	public void AdicionarMembro(Usuario u){
+		this._membros.add(u);
+	}
+	
+	public Collection<Usuario> get_membros(){
+		return this._membros;
 	}
 }

@@ -24,6 +24,7 @@ public class GrupoGateway {
 		set_nome(g.get_nome());
 		set_descricao(g.get_descricao());
 		set_limite(g.get_limite());
+		set_id(g.get_id());
 	}
 	
 	public String get_nome() {

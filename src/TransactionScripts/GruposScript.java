@@ -1,6 +1,11 @@
 package TransactionScripts;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import entidades.Grupo;
+import entidades.Usuario;
+import excecoes.EntidadeNaoEncontradaException;
 import excecoes.UsuarioJaInseridoNoGrupoException;
 import persistencia.GrupoGateway;
 import persistencia.UsuarioGateway;
@@ -10,7 +15,7 @@ import persistencia.UsuariosFinder;
 import persistencia.GrupoFinder;
 
 public class GruposScript {
-	public int CriarGrupo(int _id, String nome, String descricao, String regras, int limite) throws Exception{
+	public int CriarGrupo(String emailCriador, String nome, String descricao, String regras, int limite) throws Exception{
 		if(nome == null || nome.isEmpty()){
 			throw new IllegalArgumentException("nome");
 		}
@@ -30,7 +35,15 @@ public class GruposScript {
 		Grupo grupo = new Grupo(nome, descricao, regras, limite);
 		GrupoGateway gruposGateway = new GrupoGateway(grupo);
 		int id = gruposGateway.Insert();
-		grupo.set_id(id);
+		
+		UsuariosFinder uFinder = new UsuariosFinder();
+		UsuarioGateway uGateway = uFinder.find(emailCriador);
+		
+		if(uGateway == null)
+			throw new EntidadeNaoEncontradaException();
+		
+		Usuario_GrupoGateway ug = new Usuario_GrupoGateway(uGateway.get_id(), id);
+		ug.Insert();
 		
 		return id;
 	}
@@ -61,7 +74,26 @@ public class GruposScript {
 	public Grupo GetGrupo(int id) throws Exception{
 		GrupoFinder finder = new GrupoFinder();
 		GrupoGateway g = finder.find(id);
-		return new Grupo(g.get_nome(), g.get_descricao(), g.get_regras(), g.get_limite());
+		
+		if(g == null)
+			throw new EntidadeNaoEncontradaException();
+		
+		Grupo grupo = new Grupo(g.get_nome(), g.get_descricao(), g.get_regras(), g.get_limite());
+		grupo.set_id(id);
+		
+		Usuario_GrupoFinder associacaoFinder = new Usuario_GrupoFinder();
+		Collection<Usuario_GrupoGateway> associacoesGateway = associacaoFinder.findByGrupo(grupo.get_id());
+		
+		for(Usuario_GrupoGateway a : associacoesGateway){
+			UsuariosFinder uFinder = new UsuariosFinder();
+			UsuarioGateway usuarioGateway = uFinder.find(a.get_usuarioId());
+			
+			Usuario usuario = new Usuario(usuarioGateway.get_nome(), usuarioGateway.get_email(), usuarioGateway.get_telefone());
+			usuario.set_id(usuarioGateway.get_id());
+			grupo.AdicionarMembro(usuario);
+		}
+		
+		return grupo;
 	}
 	
 	public void AdicionarUsuarioEmGrupo(String emailUsuario, int idGrupo) throws Exception{
@@ -84,7 +116,33 @@ public class GruposScript {
 		associacaoGateway = new Usuario_GrupoGateway(u.get_id(), g.get_id());
 		associacaoGateway.Insert();
 	}
-
+	
+	public Collection<Grupo> GetAllGrupos() throws Exception{
+		GrupoFinder finder = new GrupoFinder();
+		Collection<GrupoGateway> grupoGateways = finder.getAll();
+		ArrayList<Grupo> grupos = new ArrayList<Grupo>();
+		
+		for(GrupoGateway g : grupoGateways){
+			Grupo grupo = new Grupo(g.get_nome(), g.get_descricao(), g.get_regras(), g.get_limite());
+			grupo.set_id(g.get_id());
+			
+			Usuario_GrupoFinder associacaoFinder = new Usuario_GrupoFinder();
+			Collection<Usuario_GrupoGateway> associacoesGateway = associacaoFinder.findByGrupo(grupo.get_id());
+			
+			for(Usuario_GrupoGateway a : associacoesGateway){
+				UsuariosFinder uFinder = new UsuariosFinder();
+				UsuarioGateway usuarioGateway = uFinder.find(a.get_usuarioId());
+				
+				Usuario usuario = new Usuario(usuarioGateway.get_nome(), usuarioGateway.get_email(), usuarioGateway.get_telefone());
+				grupo.AdicionarMembro(usuario);
+			}
+			
+			grupos.add(grupo);
+		}
+		
+		return grupos;
+	}
+	
 	public void DeletarGrupo(int id) throws Exception {
 		GrupoFinder finder = new GrupoFinder();
 		GrupoGateway g = finder.find(id);

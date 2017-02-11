@@ -30,18 +30,18 @@ public class CrEditarGrupo extends HttpServlet {
 			int id = Integer.parseInt(params.get("id"));
 			
 			GruposScript script = new GruposScript();
-			Grupo u = script.GetGrupo(id);
+			Grupo g = script.GetGrupo(id);
 			
 			request.setAttribute("_id", id);
-			request.setAttribute("_nome", u.get_nome());
-			request.setAttribute("_descricao", u.get_descricao());
-			request.setAttribute("_regras", u.get_regras());
-			request.setAttribute("_limite", u.get_limite());
+			request.setAttribute("_nome", g.get_nome());
+			request.setAttribute("_descricao", g.get_descricao());
+			request.setAttribute("_regras", g.get_regras());
+			request.setAttribute("_limite", g.get_limite());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
         
-		RequestDispatcher view = request.getRequestDispatcher("Usuarios/FrEditarGrupo.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("Grupo/FrEditarGrupo.jsp");
         view.forward(request, response);
 	}
 	

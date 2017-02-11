@@ -3,6 +3,7 @@ package controladores;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,18 +16,19 @@ import TransactionScripts.GruposScript;
 import TransactionScripts.UsuariosScript;
 import entidades.Grupo;
 import entidades.Usuario;
+import helpers.QueryStringHelper;
 
 /**
- * Servlet implementation class CrListarGrupo
+ * Servlet implementation class CrEditarMembrosGrupo
  */
-@WebServlet("/ListarGrupos")
-public class CrListarGrupo extends HttpServlet {
+@WebServlet("/EditarMembrosGrupo")
+public class CrEditarMembrosGrupo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CrListarGrupo() {
+    public CrEditarMembrosGrupo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,17 +37,21 @@ public class CrListarGrupo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Collection<Grupo> grupos = new ArrayList<Grupo>();
+		Collection<Usuario> usuarios = new ArrayList<Usuario>();
+		Map<String,String> params = QueryStringHelper.getQueryMap(request.getQueryString());
+		int id = Integer.parseInt(params.get("id"));
 		
 		try {
 			GruposScript script = new GruposScript();
-			grupos = script.GetAllGrupos();
+			Grupo grupo = script.GetGrupo(id);
+			usuarios = grupo.get_membros();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		request.setAttribute("list", grupos);
-		RequestDispatcher view = request.getRequestDispatcher("Grupo/FrListarGrupos.jsp");
+		request.setAttribute("list", usuarios);
+		request.setAttribute("_id", id);
+		RequestDispatcher view = request.getRequestDispatcher("Grupo/FrEditarMembrosGrupo.jsp");
         view.forward(request, response);
 	}
 
@@ -53,8 +59,17 @@ public class CrListarGrupo extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			String email = request.getParameter("_email");
+			int idGrupo = Integer.parseInt(request.getParameter("_id"));
+			
+			GruposScript ts = new GruposScript();
+			ts.AdicionarUsuarioEmGrupo(email, idGrupo);
+			
+			response.sendRedirect("./EditarMembrosGrupo?id=" + idGrupo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

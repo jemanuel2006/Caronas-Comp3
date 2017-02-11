@@ -13,6 +13,10 @@ public class Usuario_GrupoGateway {
 	private final String _insertStatement = "INSERT INTO usuario_grupo(grupo_id, usuario_id) VALUES (?,?)";
 	private final String _deleteStatement = "DELETE FROM usuario_grupo WHERE grupo_id = ? AND usuario_id = ?";
 	
+	public Usuario_GrupoGateway() {
+		
+	}
+	
 	public Usuario_GrupoGateway(int usuarioId, int grupoId) {
 		this.set_usuarioId(usuarioId);
 		this.set_grupoId(grupoId);

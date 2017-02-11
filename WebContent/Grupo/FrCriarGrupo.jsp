@@ -17,16 +17,20 @@
 					<input type="text" name="_nome" class="form-control" placeholder="Digite um nome para o grupo" required>
 				</div>
 				<div class="form-group">
-					<label for="_email">* Descrição:</label>
-					<input type="email" name="_descricao" class="form-control" placeholder="Digite uma descrição pra o grupo" required>
+					<label for="_descricao">* Descrição:</label>
+					<input type="text" name="_descricao" class="form-control" placeholder="Digite uma descrição pra o grupo" required>
 				</div>
 				<div class="form-group">
-					<label for="_telefone">* Regras:</label>
-					<input type="text" name="_regras" class="form-control" placeholder="Digite as regras do grupo" required>
+					<label for="_regras">* Regras:</label>
+					<input type="text" name="_regras" class="form-control" placeholder="Digite as regras do grupo" required >
 				</div>
 				<div class="form-group">
-					<label for="_telefone">* Limite mínimo:</label>
-					<input type="text" name="_limite" class="form-control" placeholder="Digite o limite mínimo para o grupo" required>
+					<label for="_limite">* Limite mínimo:</label>
+					<input type="number" name="_limite" class="form-control" placeholder="Digite o limite mínimo para o grupo" required>
+				</div>
+				<div class="form-group">
+					<label for="_emailCriador">* Email do criador:</label>
+					<input type="email" name="_emailCriador" class="form-control" placeholder="Digite o email do criador" required>
 				</div>
 				<button class="btn btn-success" type="submit">Salvar</button>
 				<a href="./ListarGrupo">Cancelar</a>

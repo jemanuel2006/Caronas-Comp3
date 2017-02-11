@@ -4,6 +4,7 @@ public class Veiculo {
 	private String _modelo;
 	private String _placa;
 	private String _cor;
+	public static int maxVagas = 4;
 	
 	public String get_modelo() {
 		return _modelo;

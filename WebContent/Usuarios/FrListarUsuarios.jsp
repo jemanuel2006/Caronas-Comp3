@@ -24,7 +24,6 @@
 				        <td>Email</td>
 				        <td>Telefone</td>
 				        <td></td> 
-				        <td></td>
 				    </tr>
 			    </thead>
 			    <tbody>
@@ -37,12 +36,6 @@
 				        <td><%= u.get_email() %></td>
 				        <td><%= u.get_telefone() %></td>
 				        <td><a class="btn btn-success" href="<%= "./EditarUsuario?id=" + u.get_id() %>">Editar</a></td> 
-				        <td>
-				        	<form action="./DeletarUsuario?id=<%= u.get_id() %>" method="post">
-				        		<input type="hidden" name="_id" id="_id"/>
-				        		<button class="btn btn-danger" type="submit" onclick="return confirmDelete()">Remover</button>
-				        	</form>
-				        </td> 
 			        </tr>
 				<%
 					}

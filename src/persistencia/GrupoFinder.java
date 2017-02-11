@@ -28,8 +28,6 @@ public class GrupoFinder {
                 Grupo g = new Grupo(grupoSet.getString("nome"),grupoSet.getString("descricao"), grupoSet.getString("regras"), grupoSet.getInt("limite"));
                 g.set_id(id);
                 gateway = new GrupoGateway(g);
-			 } else {
-				 throw new EntidadeNaoEncontradaException();
 			 }
 			 
 			 return gateway;

@@ -9,29 +9,29 @@
 </head>
 <body>
 <div class="container">
-	 <div class="row">
+	<div class="row">
 		<form action="./EditarGrupo" method="post">
 			<div class="col-md-8">
 				<input name="_id" id="_id" type="hidden" value="${_id}" />
 				<legend>Editar Grupo</legend>
 				<div class="form-group">
 					<label for="_nome">* Nome:</label>
-					<input type="text" name="_nome" class="form-control" placeholder="Digite um nome para o grupo" required>
+					<input type="text" name="_nome" class="form-control" value="${_nome}" placeholder="Digite um nome para o grupo" required>
 				</div>
 				<div class="form-group">
 					<label for="_email">* Descrição:</label>
-					<input type="email" name="_descricao" class="form-control" placeholder="Digite uma descrição pra o grupo" required>
+					<input type="text" name="_descricao" class="form-control" value="${_descricao}" placeholder="Digite uma descrição pra o grupo" required>
 				</div>
 				<div class="form-group">
 					<label for="_telefone">* Regras:</label>
-					<input type="text" name="_regras" class="form-control" disabled value="${_regras}">
+					<input type="text" name="_regras" class="form-control" disabled value="${_regras}" value="${_regras}">
 				</div>
 				<div class="form-group">
 					<label for="_telefone">* Limite mínimo:</label>
-					<input type="text" name="_limite" class="form-control" placeholder="Digite o limite mínimo para o grupo" required>
+					<input type="number" name="_limite" class="form-control" value="${_limite}" placeholder="Digite o limite mínimo para o grupo" required>
 				</div>
 				<button class="btn btn-success" type="submit">Salvar</button>
-				<a href="./ListarGrupo">Cancelar</a>
+				<a href="./ListarGrupos">Cancelar</a>
 			</div>
 		</form>
 	</div>
