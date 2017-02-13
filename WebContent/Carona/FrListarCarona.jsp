@@ -35,7 +35,7 @@
 				%>
 					<tr>
 						<th scope="row"><%= g.get_id() %></td>
-				        <td><%= .get_dia() %></td>
+				        <td><%= g.get_dia() %></td>
 				        <td><%= g.get_horario_saida() %></td>
 				        <td><%= g.get_regras() %></td>
 				        <td><%= g.get_limite() %></td>

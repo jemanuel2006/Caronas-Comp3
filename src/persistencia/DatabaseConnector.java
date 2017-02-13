@@ -13,7 +13,7 @@ public class DatabaseConnector {
         Connection conn = null;
         try {
         	Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/bancocaronascomp3", "root", "abc123");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/bancocaronascomp3", "root", "151515");
             return conn;
         } catch (SQLException ex) {
             // handle any errors
