@@ -4,6 +4,9 @@ import com.mysql.jdbc.Driver;;
 
 public class DatabaseConnector {
     private Connection conn;
+    public static String connString = "jdbc:mysql://127.0.0.1:3306/bancocaronascomp3";
+    public static String user = "root";
+    public static String pass = "abc123";
 
     public DatabaseConnector() throws Exception{
         conn = getConnection();
@@ -13,7 +16,7 @@ public class DatabaseConnector {
         Connection conn = null;
         try {
         	Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/bancocaronascomp3", "root", "abc123");
+            conn = DriverManager.getConnection(DatabaseConnector.connString, DatabaseConnector.user, DatabaseConnector.pass);
             return conn;
         } catch (SQLException ex) {
             // handle any errors

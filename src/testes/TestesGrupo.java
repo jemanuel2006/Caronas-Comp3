@@ -20,6 +20,13 @@ public class TestesGrupo {
 			PreparedStatement ps = db.getConnection().prepareStatement(criarBanco);
 			ps.executeUpdate();
 			
+			DatabaseConnector.connString = "jdbc:mysql://127.0.0.1:3306/bancocaronascomp3_tests";
+			db = new DatabaseConnector();
+			
+			String usarBanco = "use bancocaronascomp3_tests";
+			ps = db.getConnection().prepareStatement(usarBanco);
+			ps.executeUpdate(); 
+			
 			String criarTabelaUsuarios = "create table bancocaronascomp3_tests.usuario(id int not null auto_increment,nome varchar(500) not null,email varchar(500) not null,telefone varchar(500) not null,primary key (id));";
 			ps = db.getConnection().prepareStatement(criarTabelaUsuarios);
 			ps.executeUpdate();
@@ -30,6 +37,10 @@ public class TestesGrupo {
 			
 			String inserirUsuarioFake = "insert into bancocaronascomp3_tests.usuario(nome,email,telefone) values ('usuario','a@a.com','846723623')";
 			ps = db.getConnection().prepareStatement(inserirUsuarioFake);
+			ps.executeUpdate();
+			
+			String criarTabelaUsuario_Grupo = "create table usuario_grupo(id int not null auto_increment,grupo_id int not null,usuario_id int not null,primary key (id),foreign key (grupo_id) REFERENCES grupo(id),foreign key (usuario_id) REFERENCES usuario(id));";
+			ps = db.getConnection().prepareStatement(criarTabelaUsuario_Grupo);
 			ps.executeUpdate();
 		}
 		catch(Exception ex){
@@ -52,7 +63,6 @@ public class TestesGrupo {
 	
 	@Test
 	public void CriarGrupoComTodosOsCampos() throws Exception{
-		
 		String nome = "grupo teste";
 		String desc = "descrição";
 		String regras = "regras";
