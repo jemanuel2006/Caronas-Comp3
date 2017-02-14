@@ -19,8 +19,8 @@ public class VeiculoGateway {
 		this.set_cor(cor);
 	}
 	
-	private final String _insertStatement = "INSERT INTO veiculo(modelo,placa,cor,motorista_id) VALUES (?,?,?,?)";
-	private final String _updateStatement = "UPDATE usuario SET modelo = ?,placa = ?, cor = ?, motorista_id ? WHERE id = ?";
+	private final String _insertStatement = "INSERT INTO veiculo(modelo,placa,cor,usuario_id) VALUES (?,?,?,?)";
+	private final String _updateStatement = "UPDATE usuario SET modelo = ?,placa = ?, cor = ?, usuario_id ? WHERE id = ?";
 	
 	public String get_modelo() {
 		return _modelo;

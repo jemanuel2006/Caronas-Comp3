@@ -1,6 +1,7 @@
 package entidades;
 
 public class Veiculo {
+	private int _id;
 	private String _modelo;
 	private String _placa;
 	private String _cor;
@@ -23,6 +24,12 @@ public class Veiculo {
 	}
 	public void set_cor(String _cor) {
 		this._cor = _cor;
+	}
+	public int get_id() {
+		return _id;
+	}
+	public void set_id(int _id) {
+		this._id = _id;
 	}
 	
 }

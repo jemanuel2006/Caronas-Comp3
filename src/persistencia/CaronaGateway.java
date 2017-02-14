@@ -18,8 +18,8 @@ public class CaronaGateway {
 	//0 = ativo, 1 = concluida, 2 = cancelada
 	private int _estadoCarona;
 	
-	private final String _insertStatement = "INSERT INTO grupo(dia, hora_saida,motoristaId,veiculoId,origemId,destinoId,estadoCarona) VALUES (?,?,?,?,?,?,?)";
-	private final String _updateStatement = "UPDATE grupo SET dia = ?, hora_saida = ?,motoristaId = ?,veiculoId = ?, origemid = ?, destinoid = ?,estadoCarona = ? WHERE id = ?";
+	private final String _insertStatement = "INSERT INTO carona(dia, hora_saida,motoristaId,veiculoId,origemId,destinoId,estadoCarona) VALUES (?,?,?,?,?,?,?)";
+	private final String _updateStatement = "UPDATE carona SET dia = ?, hora_saida = ?,motoristaId = ?,veiculoId = ?, origemid = ?, destinoid = ?,estadoCarona = ? WHERE id = ?";
 	
 	public Date getDia() {
 		return dia;

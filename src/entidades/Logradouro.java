@@ -7,6 +7,7 @@ public class Logradouro {
 	private String _distrito;
 	private String _endereco;
 	private int _numero;
+	private int _id;
 	
 	public String get_cep() {
 		return _cep;
@@ -43,5 +44,11 @@ public class Logradouro {
 	}
 	public void set_numero(int _numero) {
 		this._numero = _numero;
+	}
+	public int get_id() {
+		return _id;
+	}
+	public void set_id(int _id) {
+		this._id = _id;
 	}
 }

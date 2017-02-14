@@ -24,6 +24,8 @@
 				        <td>Email</td>
 				        <td>Telefone</td>
 				        <td></td> 
+				        <td></td>
+				        <td></td>
 				    </tr>
 			    </thead>
 			    <tbody>
@@ -36,6 +38,8 @@
 				        <td><%= u.get_email() %></td>
 				        <td><%= u.get_telefone() %></td>
 				        <td><a class="btn btn-success" href="<%= "./EditarUsuario?id=" + u.get_id() %>">Editar</a></td> 
+				        <td><a class="btn btn-primary" href="<%= "./ListarVeiculos?usuarioId=" + u.get_id() %>">Visualizar Veículos</a></td> 
+				        <td><a class="btn btn-primary" href="<%= "./CriarCarona?usuarioId=" + u.get_id() %>">Criar Carona</a></td> 
 			        </tr>
 				<%
 					}

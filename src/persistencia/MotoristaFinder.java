@@ -24,8 +24,6 @@ public class MotoristaFinder {
 			 
 			 if (usuarioSet.next()) {
                 gateway = new MotoristaGateway(id);
-			 } else {
-				 throw new EntidadeNaoEncontradaException();
 			 }
 			 
 			 return gateway;

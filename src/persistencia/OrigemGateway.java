@@ -22,7 +22,6 @@ public class OrigemGateway {
 	}
 	
 	private final String _insertStatement = "INSERT INTO origem(id) VALUES (?)";
-	private final String _deleteStatement = "DELETE FROM origem WHERE id = ?";
 	
 	public int Insert() throws Exception {
 		PreparedStatement insertStatement = null;
@@ -35,15 +34,6 @@ public class OrigemGateway {
 			 int affectedRows = insertStatement.executeUpdate();
 			 if (affectedRows == 0) {
 			    throw new SQLException("Ocorreu um erro ao executar a criação da origem.");
-			 }
-			
-			 try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
-			    if (generatedKeys.next()) {
-			        this.set_id(generatedKeys.getInt(1));
-			    }
-			    else {
-			        throw new SQLException("Ocorreu um erro ao adquirir o id da nova origem.");
-			    }
 			 }
 			 
 			 return get_id();

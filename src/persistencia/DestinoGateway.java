@@ -22,7 +22,6 @@ public class DestinoGateway {
 	}
 	
 	private final String _insertStatement = "INSERT INTO destino(id) VALUES (?)";
-	private final String _deleteStatement = "DELETE FROM destino WHERE id = ?";
 	
 	public int Insert() throws Exception {
 		PreparedStatement insertStatement = null;
@@ -35,15 +34,6 @@ public class DestinoGateway {
 			 int affectedRows = insertStatement.executeUpdate();
 			 if (affectedRows == 0) {
 			    throw new SQLException("Ocorreu um erro ao executar a criação do destino.");
-			 }
-			
-			 try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
-			    if (generatedKeys.next()) {
-			        this.set_id(generatedKeys.getInt(1));
-			    }
-			    else {
-			        throw new SQLException("Ocorreu um erro ao adquirir o id do novo destino.");
-			    }
 			 }
 			 
 			 return get_id();

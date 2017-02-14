@@ -11,10 +11,14 @@ import excecoes.EntidadeNaoEncontradaException;
 import excecoes.LimiteVagasAtingidoException;
 import persistencia.CaronaFinder;
 import persistencia.CaronaGateway;
+import persistencia.DestinoFinder;
+import persistencia.DestinoGateway;
 import persistencia.LogradouroFinder;
 import persistencia.LogradouroGateway;
 import persistencia.MotoristaFinder;
 import persistencia.MotoristaGateway;
+import persistencia.OrigemFinder;
+import persistencia.OrigemGateway;
 import persistencia.ParadaFinder;
 import persistencia.ParadaGateway;
 import persistencia.UsuarioGateway;
@@ -49,17 +53,35 @@ public class CaronaScript {
 			throw new EntidadeNaoEncontradaException();
 		}
 		
-		LogradouroFinder lFinder = new LogradouroFinder();
-		LogradouroGateway origemGateway = lFinder.find(logradouroOrigemId);
+		OrigemFinder oFinder = new OrigemFinder();
+		OrigemGateway oGateway = oFinder.find(logradouroOrigemId);
 		
-		if(origemGateway == null){
-			throw new EntidadeNaoEncontradaException();
+		LogradouroFinder lFinder = new LogradouroFinder();
+		
+		if(oGateway == null){
+			
+			LogradouroGateway origemGateway = lFinder.find(logradouroOrigemId);
+			
+			if(origemGateway == null){
+				throw new EntidadeNaoEncontradaException();
+			}
+			
+			oGateway = new OrigemGateway(logradouroOrigemId);
+			oGateway.Insert();
 		}
 		
-		LogradouroGateway destinoGateway = lFinder.find(logradouroDestinoId);
+		DestinoFinder dFinder = new DestinoFinder();
+		DestinoGateway dGateway = dFinder.find(logradouroDestinoId);
 		
-		if(destinoGateway == null){
-			throw new EntidadeNaoEncontradaException();
+		if(dGateway == null){
+			LogradouroGateway destinoGateway = lFinder.find(logradouroDestinoId);
+			
+			if(destinoGateway == null){
+				throw new EntidadeNaoEncontradaException();
+			}
+			
+			dGateway = new DestinoGateway(logradouroDestinoId);
+			dGateway.Insert();
 		}
 		
 		CaronaGateway cGateway = new CaronaGateway();

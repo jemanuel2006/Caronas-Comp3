@@ -1,8 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" type="text/css" href="./css/index.css">
 <link rel="stylesheet" type="text/css" href="./scripts/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./scripts/datetimepicker/bootstrap-datepicker.css">
 <script type="text/javascript" src="./scripts/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="./scripts/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./scripts/datetimepicker/bootstrap-datepicker.js"></script>
 <div class="container">
     <nav class="navbar navbar-inverse">
         <div class="navbar-header">
@@ -24,6 +26,7 @@
                                 <li class="dropdown-header">Gerenciar</li>
                                 <li><a href="./ListarUsuarios">Usuários</a></li>
                                 <li><a href="./ListarGrupos">Grupos</a></li>
+                                <li><a href="./ListarLogradouros">Logradouros</a></li>
                                 <li><a href="./CriarCarona">Caronas</a></li>
                                 
                             </ul>
