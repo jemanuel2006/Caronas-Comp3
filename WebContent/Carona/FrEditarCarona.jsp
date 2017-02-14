@@ -1,42 +1,89 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <jsp:include page="../MenuPrincipal.jsp"></jsp:include>
+<%@ page import ="entidades.Veiculo" %>
+<%@ page import ="entidades.Logradouro" %>
+<%@ page import ="java.util.ArrayList" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Criar Grupo</title>
+<title>Editar Carona</title>
 </head>
 <body>
+	<%  
+		boolean podeAlterarCarona = (boolean) request.getAttribute("podeAlterarCarona");
+		int veiculoId = (int) request.getAttribute("veiculoId");
+		int origemId = (int) request.getAttribute("origemId");
+		int destinoId = (int) request.getAttribute("destinoId");
+		ArrayList<Veiculo> veiculos = (ArrayList<Veiculo>) request.getAttribute("veiculos");
+		ArrayList<Logradouro> logradouros = (ArrayList<Logradouro>) request.getAttribute("logradouros");
+	%>
 	<div class="container">
 	 <div class="row">
-		<form action="./EditarCarona" method="post">
+		<form id="caronaForm" action="./EditarCarona" method="post">
+			<input name="_id" id="_id" type="hidden" value="${_id}" />
+			<input name="usuarioId" id="_id" type="hidden" value="${usuarioId}" />
 			<div class="col-md-8">
 				<legend>Editar Carona</legend>
 				<div class="form-group">
-					<label for="_nome">* Entre com o Id do Veículo:</label>
-					<input type="text" name="_veiculoId" class="form-control" disabled value="${_veiculoId}"placeholder="Digite o Id do Veículo:" required>
+					<label>* Veículo:</label>
+			            <select class="form-control" name="_veiculoId" required <%= podeAlterarCarona ? "" : "disabled" %>>
+			                <option value="">Selecione um veículo</option>
+			                <%
+								for(Veiculo v : veiculos){
+							%>
+							<option value="<%= v.get_id()%>" <%= v.get_id() == veiculoId ? "selected='selected'" : "" %>><%= v.get_modelo() + " - " + v.get_cor() + " - " + v.get_placa() %></option>
+							<%
+							}
+							%>
+			            </select>
 				</div>
 				<div class="form-group">
-					<label for="_descricao">* Data:</label>
-					<input type="Date" name="_dia" class="form-control" disabled value="${_dia}"placeholder="Selecione uma data para a carona" required>
+			        <label for="_dia">* Data da carona</label>
+			        <div class="input-group bootstrap-timepicker timepicker">
+	                	<input type="date" class="form-control" name="_dia" value="${dia}" required <%= podeAlterarCarona ? "" : "disabled" %>/>
+	                	 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	                </div>
+			    </div>
+				    
+				<div class="form-group">
+					<label for="horario_saida">* Horário de saída:</label>
+					<div class="input-group bootstrap-timepicker timepicker">
+			            <input name="horario_saida" type="time" class="form-control input-small" value="${hora_saida}" required <%= podeAlterarCarona ? "" : "disabled" %>>
+			            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+			        </div>
 				</div>
 				<div class="form-group">
-					<label for="_regras">* Horário de saída:</label>
-					<input type="Time" name="_hora_saida" class="form-control" value="${_hora_saida}"placeholder="Selecione o horário de saída" required >
+					<label>* Logradouro Origem:</label>
+		            <select class="form-control" name="_origemId" required <%= podeAlterarCarona ? "" : "disabled" %>>
+		                <option value="">Selecione um logradouro de origem</option>
+		                <%
+							for(Logradouro l : logradouros){
+						%>
+						<option value="<%= l.get_id()%>" <%= l.get_id() == origemId ? "selected='selected'" : "" %>><%= l.get_endereco() + "-" + l.get_numero() + "- CEP: " + l.get_cep() %></option>
+						<%
+						}
+						%>
+		            </select>
 				</div>
 				<div class="form-group">
-					<label for="_limite">* Endereço de origem:</label>
-					<input type="number" name="_logradouroOrigemId" class="form-control" disabled value="${_logradouroOrigemId}"placeholder="Digite o limite mínimo para o grupo" required>
+					<label>* Logradouro Destino:</label>
+		            <select class="form-control" name="_destinoId" required <%= podeAlterarCarona ? "" : "disabled" %>>
+		                <option value="">Selecione um logradouro de destino</option>
+		               	<%
+							for(Logradouro l : logradouros){
+						%>
+						<option value="<%= l.get_id()%>" <%= l.get_id() == destinoId ? "selected='selected'" : "" %>><%= l.get_endereco() + "-" + l.get_numero() + "- CEP: " + l.get_cep() %></option>
+						<%
+						}
+						%>
+		            </select>
 				</div>
-				<div class="form-group">
-					<label for="_emailCriador">* Endereço de destino:</label>
-					<input type="email" name="_logradouroDestinoId" class="form-control" disabled value="${_logradouroDestinoId}"placeholder="Digite o email do criador" required>
+				<button class="btn btn-success" type="submit" <%= podeAlterarCarona ? "" : "disabled" %>>Salvar</button>
+				<a href="./ListarCaronas">Cancelar</a>
 				</div>
-				<button class="btn btn-success" type="submit">Salvar</button>
-				<a href="./ListarCarona">Cancelar</a>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
-</div>
 </body>
 </html>

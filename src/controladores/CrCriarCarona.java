@@ -43,7 +43,7 @@ public class CrCriarCarona extends HttpServlet {
 			int _veiculoId = Integer.parseInt(request.getParameter("_veiculoId"));
 			int _motoristaId = Integer.parseInt(request.getParameter("usuarioId"));
 			Date _dia = Date.valueOf(request.getParameter("_dia"));
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+			SimpleDateFormat sdf = new SimpleDateFormat("DD/MM/YYYY HH:mm");
 			Date _hora_saida = new Date(sdf.parse(request.getParameter("horario_saida")).getTime());
 			int _logradouroOrigemId = Integer.parseInt(request.getParameter("_origemId"));
 			int _logradouroDestinoId = Integer.parseInt(request.getParameter("_destinoId"));

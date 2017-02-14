@@ -63,6 +63,7 @@ public class MotoristaScript {
 			veiculo.set_modelo(v.get_modelo());
 			veiculo.set_placa(v.get_placa());
 			veiculo.set_id(v.get_id());
+			veiculo.set_motorista(motorista);
 			motorista.AdicionarVeiculo(veiculo);
 		}
 		
@@ -76,12 +77,22 @@ public class MotoristaScript {
 		if(vGateway == null)
 			throw new EntidadeNaoEncontradaException();
 		
+		Motorista motorista = this.GetMotorista(vGateway.get_motoristaId());
+		
 		Veiculo v = new Veiculo();
 		v.set_cor(vGateway.get_cor());
 		v.set_id(veiculoId);
 		v.set_modelo(vGateway.get_modelo());
 		v.set_placa(vGateway.get_placa());
+		v.set_motorista(motorista);
 		
 		return v;
+	}
+	
+	public Motorista GetMotoristaByVeiculo(int veiculoId) throws Exception{
+		VeiculoFinder vFinder = new VeiculoFinder();
+		VeiculoGateway vGateway = vFinder.find(veiculoId);
+		
+		return this.GetMotorista(vGateway.get_motoristaId());
 	}
 }

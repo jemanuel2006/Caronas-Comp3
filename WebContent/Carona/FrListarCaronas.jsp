@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page import ="entidades.Grupo" %>
+<%@ page import ="entidades.Carona" %>
 <%@ page import ="java.util.ArrayList" %>
 <jsp:include page="../MenuPrincipal.jsp"></jsp:include>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,20 +28,23 @@
 				        <td>Destino</td>
 				        <td>Estado da Carona</td>
 				        <td></td>
+				        <td></td>
 				    </tr>
 			    </thead>
 			    <tbody>
 				<%
-					for(Grupo g : list){
+					for(Carona c : list){
 				%>
 					<tr>
-						<th scope="row"><%= g.get_id() %></td>
-				        <td><%= g.get_dia() %></td>
-				        <td><%= g.get_horario_saida() %></td>
-				        <td><%= g.get_regras() %></td>
-				        <td><%= g.get_limite() %></td>
-				        <td><a class="btn btn-success" href="<%= "./EditarCarona?id=" + g.get_id() %>">Editar</a></td>
-				        
+						<th scope="row"><%= c.get_id() %></td>
+				        <td><%= c.getDia() %></td>
+				        <td><%= c.getHora_saida() %></td>
+				        <td><%= c.get_veiculo().get_motorista().get_nome() %></td>
+				        <td><%= c.get_origem().get_endereco() + "-" + c.get_origem().get_numero() + "- CEP: " + c.get_origem().get_cep() %></td>
+				        <td><%= c.get_destino().get_endereco() + "-" + c.get_destino().get_numero() + "- CEP: " + c.get_destino().get_cep() %></td>
+				        <td><%= c.get_estadoCarona() %></td>
+				        <td><a class="btn btn-success" href="<%= "./EditarCarona?id=" + c.get_id() %>">Editar</a></td>
+				        <td><a class="btn btn-success" href="<%= "./VisualizarParticipantes?caronaId=" + c.get_id() %>">Ver Participantes</a></td>
 			        </tr>
 				<%
 					}
@@ -48,8 +52,7 @@
 				</tbody>
 			</table>
 		</div>
-	
-		<a class="btn btn-success" href="./CriarCarona">Criar Carona</a>
+		<a class="btn btn-primary" href="./CriarParticipacaoCarona">Entrar em uma Carona</a>
 	</div>
 </body>
 </html>

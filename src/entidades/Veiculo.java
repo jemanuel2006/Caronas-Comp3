@@ -5,6 +5,7 @@ public class Veiculo {
 	private String _modelo;
 	private String _placa;
 	private String _cor;
+	private Motorista _motorista;
 	public static int maxVagas = 4;
 	
 	public String get_modelo() {
@@ -30,6 +31,12 @@ public class Veiculo {
 	}
 	public void set_id(int _id) {
 		this._id = _id;
+	}
+	public Motorista get_motorista() {
+		return _motorista;
+	}
+	public void set_motorista(Motorista _motorista) {
+		this._motorista = _motorista;
 	}
 	
 }

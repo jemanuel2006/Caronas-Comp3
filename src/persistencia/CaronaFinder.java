@@ -26,8 +26,8 @@ public class CaronaFinder {
 			 if (caronaSet.next()) {
                 gateway = new CaronaGateway();
                 gateway.set_id(caronaSet.getInt("id"));
-                gateway.set_logradouroDestinoId(caronaSet.getInt("logradouroDestinoId"));
-                gateway.set_logradouroOrigemId(caronaSet.getInt("logradouroOrigemId"));
+                gateway.set_logradouroDestinoId(caronaSet.getInt("destinoId"));
+                gateway.set_logradouroOrigemId(caronaSet.getInt("origemId"));
                 gateway.set_motoristaId(caronaSet.getInt("motoristaId"));
                 gateway.set_veiculoId(caronaSet.getInt("veiculoId"));
                 gateway.setDia(caronaSet.getDate("dia"));
@@ -56,8 +56,8 @@ public class CaronaFinder {
 			 while (caronaSet.next()) {
                 CaronaGateway gateway = new CaronaGateway();
                 gateway.set_id(caronaSet.getInt("id"));
-                gateway.set_logradouroDestinoId(caronaSet.getInt("logradouroDestinoId"));
-                gateway.set_logradouroOrigemId(caronaSet.getInt("logradouroOrigemId"));
+                gateway.set_logradouroDestinoId(caronaSet.getInt("destinoId"));
+                gateway.set_logradouroOrigemId(caronaSet.getInt("origemId"));
                 gateway.set_motoristaId(caronaSet.getInt("motoristaId"));
                 gateway.set_veiculoId(caronaSet.getInt("veiculoId"));
                 gateway.setDia(caronaSet.getDate("dia"));

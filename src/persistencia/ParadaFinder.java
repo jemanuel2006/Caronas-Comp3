@@ -30,8 +30,6 @@ public class ParadaFinder {
 				 gateway.set_id(paradaSet.getInt("id"));
 				 gateway.set_logradouroId(paradaSet.getInt("logradouroId"));
 				 gateway.set_usuarioId(paradaSet.getInt("usuarioId"));
-			 } else {
-				 throw new EntidadeNaoEncontradaException();
 			 }
 			 
 			 return gateway;

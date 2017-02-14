@@ -50,7 +50,10 @@ public class UsuariosScript {
 	public Usuario GetUsuario(int id) throws Exception{
 		UsuariosFinder finder = new UsuariosFinder();
 		UsuarioGateway u = finder.find(id);
-		return new Usuario(u.get_nome(), u.get_email(), u.get_telefone());
+		Usuario usuario = new Usuario(u.get_nome(), u.get_email(), u.get_telefone());
+		usuario.set_id(id);
+		
+		return usuario;
 	}
 	
 	public Collection<Usuario> GetAllUsuarios() throws Exception{

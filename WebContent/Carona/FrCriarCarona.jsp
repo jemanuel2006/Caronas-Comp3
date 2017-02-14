@@ -7,70 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1;">
-<script type="text/javascript" >
-
-$(document).ready(function() {
-
-    function limpa_formulário_cep() {
-        $("#rua").val("");
-        $("#bairro").val("");
-        $("#cidade").val("");
-        $("#uf").val("");
-    }
-    
-    $("#cep").on('blur', function() {
-        var cep = $(this).val().replace(/\D/g, '');
-
-        if (cep && cep != "") {
-            var regex = /^[0-9]{8}$/;
-
-            if(regex.test(cep)) {
-                $("#rua").val("...");
-                $("#bairro").val("...");
-                $("#cidade").val("...");
-                $("#uf").val("...");
-                
-
-                //Consulta o webservice viacep.com.br/
-                $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
-
-                    if (!("erro" in dados)) {
-                        //Atualiza os campos com os valores da consulta.
-                        $("#rua").val(dados.logradouro);
-                        $("#bairro").val(dados.bairro);
-                        $("#cidade").val(dados.localidade);
-                        $("#uf").val(dados.uf);
-                       
-                    } //end if.
-                    else {
-                        //CEP pesquisado não foi encontrado.
-                        limpa_formulário_cep();
-                        alert("CEP não encontrado.");
-                    }
-                });
-            } //end if.
-            else {
-                //cep é inválido.
-                limpa_formulário_cep();
-                alert("Formato de CEP inválido.");
-            }
-        } //end if.
-        else {
-            //cep sem valor, limpa formulário.
-            limpa_formulário_cep();
-        }
-    });
-});
-
-<%  
-	ArrayList<Veiculo> veiculos = (ArrayList<Veiculo>) request.getAttribute("veiculos");
-	ArrayList<Logradouro> logradouros = (ArrayList<Logradouro>) request.getAttribute("logradouros");
-%>
-
-</script>
 <title>Criar Carona</title>
 </head>
 <body>
+	<%  
+		ArrayList<Veiculo> veiculos = (ArrayList<Veiculo>) request.getAttribute("veiculos");
+		ArrayList<Logradouro> logradouros = (ArrayList<Logradouro>) request.getAttribute("logradouros");
+	%>
 	<div class="container">
 	 <div class="row">
 		<form id="caronaForm" action="./CriarCarona" method="post">
@@ -91,7 +34,7 @@ $(document).ready(function() {
 			            </select>
 				</div>
 				<div class="form-group">
-			        <label for="_dia">* Selecione a data da carona</label>
+			        <label for="_dia">* Data da carona</label>
 			        <div class="input-group bootstrap-timepicker timepicker">
 	                	<input type="date" class="form-control" name="_dia" required/>
 	                	 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>

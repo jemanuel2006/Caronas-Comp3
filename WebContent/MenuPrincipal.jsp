@@ -27,7 +27,7 @@
                                 <li><a href="./ListarUsuarios">Usuários</a></li>
                                 <li><a href="./ListarGrupos">Grupos</a></li>
                                 <li><a href="./ListarLogradouros">Logradouros</a></li>
-                                <li><a href="./CriarCarona">Caronas</a></li>
+                                <li><a href="./ListarCaronas">Caronas</a></li>
                                 
                             </ul>
                         </li>

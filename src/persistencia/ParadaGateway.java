@@ -38,6 +38,7 @@ public class ParadaGateway {
 	}
 	
 	private final String _insertStatement = "INSERT INTO parada(caronaId, logradouroId, usuarioId) VALUES (?,?,?)";
+	private final String _deleteStatement = "DELETE FROM parada WHERE id = ?";
 	
 	public int Insert() throws Exception {
 		PreparedStatement insertStatement = null;
@@ -64,6 +65,25 @@ public class ParadaGateway {
 			 }
 			 
 			 return get_id();
+		 } finally {
+			dbConn.CloseConnection();
+		 }
+	}
+	
+	public void Delete() throws Exception {
+		PreparedStatement deleteStatement = null;
+		DatabaseConnector dbConn = new DatabaseConnector();
+		 try {
+			 Connection s = dbConn.getConnection();
+			 deleteStatement = s.prepareStatement(_deleteStatement);
+			 deleteStatement.setInt(1, _id);
+			 
+			 int affectedRows = deleteStatement.executeUpdate();
+			 
+			 if (affectedRows == 0) {
+			    throw new SQLException("Ocorreu um erro ao executar a exclusão da parada.");
+			 }
+			 
 		 } finally {
 			dbConn.CloseConnection();
 		 }
