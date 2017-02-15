@@ -7,6 +7,7 @@ import java.util.Collection;
 public class Carona {
 	private int _id;
 	private Date dia;
+	private int motoristaId;
 	private Date hora_saida;
 	private Logradouro _origem;
 	private Logradouro _destino;
@@ -81,6 +82,14 @@ public class Carona {
 
 	public void set_estadoCarona(int _estadoCarona) {
 		this._estadoCarona = _estadoCarona;
+	}
+	
+	public int getMotoristaId() {
+		return motoristaId;
+	}
+
+	public void setMotoristaId(int motoristaId) {
+		this.motoristaId = motoristaId;
 	}
 	
 	@Override
