@@ -7,6 +7,7 @@ import java.util.Collection;
 public class Carona {
 	private int _id;
 	private Date dia;
+	private int motoristaId;
 	private Date hora_saida;
 	private Logradouro _origem;
 	private Logradouro _destino;
@@ -78,10 +79,35 @@ public class Carona {
 	public int get_estadoCarona() {
 		return _estadoCarona;
 	}
+	
+	public String get_estadoNomeado(){
+		String estadoNome = "";
+		switch(this._estadoCarona){
+			case 0:
+				estadoNome = "Ativa";
+				break;
+			case 1:
+				estadoNome = "Concluída";
+				break;
+			case 2:
+				estadoNome = "Cancelada";
+				break;
+		}
+		
+		return estadoNome;
+	}
 
 	public void set_estadoCarona(int _estadoCarona) {
 		this._estadoCarona = _estadoCarona;
 	}
+	
+	public int getMotoristaId() {
+ 		return motoristaId;
+ 	}
+		 
+ 	public void setMotoristaId(int motoristaId) {
+ 		this.motoristaId = motoristaId;
+	 }
 	
 	@Override
 	public String toString(){

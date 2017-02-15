@@ -36,6 +36,8 @@ public class UsuariosFinder {
 			 
 			 return gateway;
 		 } finally {
+			 if(selectStatement != null)
+					selectStatement.close();
 			dbConn.CloseConnection();
 		 }
 	}
@@ -61,6 +63,8 @@ public class UsuariosFinder {
 			 
 			 return gateway;
 		 } finally {
+			 if(selectStatement != null)
+					selectStatement.close();
 			dbConn.CloseConnection();
 		 }
 	}
@@ -84,6 +88,8 @@ public class UsuariosFinder {
 			 
 			 return usuarios;
 		 } finally {
+			 if(selectStatement != null)
+					selectStatement.close();
 			dbConn.CloseConnection();
 		 }
 	}

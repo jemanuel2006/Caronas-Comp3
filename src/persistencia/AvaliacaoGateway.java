@@ -30,7 +30,7 @@ public class AvaliacaoGateway {
 		this._estrelas = _estrelas;
 	}
 	
-	private final String _insertStatement = "INSERT INTO avalicao(usuarioId, estrelas) VALUES (?,?)";
+	private final String _insertStatement = "INSERT INTO avaliacao(usuarioId, estrelas) VALUES (?,?)";
 	
 	public int Insert() throws Exception {
 		PreparedStatement insertStatement = null;
@@ -57,6 +57,8 @@ public class AvaliacaoGateway {
 			 
 			 return get_id();
 		 } finally {
+			 if(insertStatement != null)
+					insertStatement.close();
 			dbConn.CloseConnection();
 		 }
 	}

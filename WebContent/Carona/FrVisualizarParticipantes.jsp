@@ -47,6 +47,7 @@
 				%>
 				</tbody>
 			</table>
+			<a href="./ListarCaronas">Voltar</a>
 		</div>
 	</div>
 </body>

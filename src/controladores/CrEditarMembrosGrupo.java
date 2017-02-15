@@ -45,6 +45,8 @@ public class CrEditarMembrosGrupo extends HttpServlet {
 			GruposScript script = new GruposScript();
 			Grupo grupo = script.GetGrupo(id);
 			usuarios = grupo.get_membros();
+			
+			request.setAttribute("max", grupo.get_limite());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

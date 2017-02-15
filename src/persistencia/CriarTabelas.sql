@@ -90,7 +90,7 @@ foreign key (logradouroId) REFERENCES logradouro(id),
 foreign key (usuarioId) REFERENCES usuario(id)
 );
 
-create table avalicao(
+create table avaliacao(
 id int not null auto_increment,
 usuarioId int not null,
 estrelas int not null,

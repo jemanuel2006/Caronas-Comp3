@@ -29,6 +29,7 @@
 				        <td>Estado da Carona</td>
 				        <td></td>
 				        <td></td>
+				        <td></td>
 				    </tr>
 			    </thead>
 			    <tbody>
@@ -42,9 +43,10 @@
 				        <td><%= c.get_veiculo().get_motorista().get_nome() %></td>
 				        <td><%= c.get_origem().get_endereco() + "-" + c.get_origem().get_numero() + "- CEP: " + c.get_origem().get_cep() %></td>
 				        <td><%= c.get_destino().get_endereco() + "-" + c.get_destino().get_numero() + "- CEP: " + c.get_destino().get_cep() %></td>
-				        <td><%= c.get_estadoCarona() %></td>
-				        <td><a class="btn btn-success" href="<%= "./EditarCarona?id=" + c.get_id() %>">Editar</a></td>
-				        <td><a class="btn btn-success" href="<%= "./VisualizarParticipantes?caronaId=" + c.get_id() %>">Ver Participantes</a></td>
+				        <td><%= c.get_estadoNomeado() %></td>
+				        <td><a class="btn btn-success <%= c.get_estadoCarona() != 0 ? "disabled":""%>" href="<%= "./EditarCarona?id=" + c.get_id() %>">Editar</a></td>
+				        <td><a class="btn btn-success <%= c.get_estadoCarona() != 0 ? "disabled":""%>" href="<%= "./VisualizarParticipantes?caronaId=" + c.get_id() %>">Ver Participantes</a></td>
+				        <td><a class="btn btn-warning <%= c.get_estadoCarona() != 0 ? "disabled":""%>" href="<%= "./FinalizarCarona?caronaId=" + c.get_id() %>">Finalizar</a></td>
 			        </tr>
 				<%
 					}

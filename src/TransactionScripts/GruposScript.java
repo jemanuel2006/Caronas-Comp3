@@ -85,11 +85,8 @@ public class GruposScript {
 		Collection<Usuario_GrupoGateway> associacoesGateway = associacaoFinder.findByGrupo(grupo.get_id());
 		
 		for(Usuario_GrupoGateway a : associacoesGateway){
-			UsuariosFinder uFinder = new UsuariosFinder();
-			UsuarioGateway usuarioGateway = uFinder.find(a.get_usuarioId());
-			
-			Usuario usuario = new Usuario(usuarioGateway.get_nome(), usuarioGateway.get_email(), usuarioGateway.get_telefone());
-			usuario.set_id(usuarioGateway.get_id());
+			UsuariosScript uts = new UsuariosScript();
+			Usuario usuario = uts.GetUsuario(a.get_usuarioId());
 			grupo.AdicionarMembro(usuario);
 		}
 		

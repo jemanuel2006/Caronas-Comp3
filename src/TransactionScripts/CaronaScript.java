@@ -310,7 +310,7 @@ public class CaronaScript {
 		Collection<Carona> caronasDisponiveis = new ArrayList<>();
 		
 		for(Carona carona: caronas){
-			if(carona.GetParadas().size() < Veiculo.maxVagas)
+			if(carona.get_estadoCarona() == 0 && carona.GetParadas().size() < Veiculo.maxVagas)
 				caronasDisponiveis.add(carona);
 		}
 		
@@ -334,6 +334,32 @@ public class CaronaScript {
 		parada.set_usuario(us.GetUsuario(pGateway.get_usuarioId()));
 		
 		return parada;
+	}
+	
+	public void FinalizarCarona(int caronaId) throws Exception{
+		CaronaFinder cFinder = new CaronaFinder();
+		CaronaGateway cGateway = cFinder.find(caronaId);
+		
+		if(cGateway == null){
+			throw new EntidadeNaoEncontradaException();
+		}
+		
+		//Concluída
+		cGateway.set_estadoCarona(1);
+		cGateway.Save();
+	}
+	
+	public void CancelarCarona(int caronaId) throws Exception{
+		CaronaFinder cFinder = new CaronaFinder();
+		CaronaGateway cGateway = cFinder.find(caronaId);
+		
+		if(cGateway == null){
+			throw new EntidadeNaoEncontradaException();
+		}
+		
+		//Cancelada
+		cGateway.set_estadoCarona(2);
+		cGateway.Save();
 	}
 	
 	public boolean PodeAlterarCarona(int caronaId) throws Exception{

@@ -12,6 +12,7 @@
 <body>
 	<%  
 		ArrayList<Usuario> list = (ArrayList<Usuario>) request.getAttribute("list");
+		int max = (int) request.getAttribute("max"); 
 	%>
 	
 	<div class="container">
@@ -24,17 +25,19 @@
 				        <td>Nome</td>
 				        <td>Email</td>
 				        <td>Telefone</td>
+				        <td>Situação</td>
 				    </tr>
 			    </thead>
 			    <tbody>
 				<%
-					for(Usuario g : list){
+					for(Usuario u : list){
 				%>
 					<tr>
-						<th scope="row"><%= g.get_id() %></td>
-				        <td><%= g.get_nome() %></td>
-				        <td><%= g.get_email() %></td>
-				        <td><%= g.get_telefone() %></td>
+						<th scope="row"><%= u.get_id() %></td>
+				        <td><%= u.get_nome() %></td>
+				        <td><%= u.get_email() %></td>
+				        <td><%= u.get_telefone() %></td>
+				        <td><%= u.get_quantidadeAvaliacoesRuins() > max ? "Inativo" : "Ativo"%></td>
 			        </tr>
 				<%
 					}

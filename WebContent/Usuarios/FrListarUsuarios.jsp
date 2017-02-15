@@ -23,7 +23,8 @@
 				        <td>Nome</td>
 				        <td>Email</td>
 				        <td>Telefone</td>
-				        <td></td> 
+				        <td>Média de Avaliações</td> 
+				        <td></td>
 				        <td></td>
 				        <td></td>
 				    </tr>
@@ -37,9 +38,10 @@
 				        <td><%= u.get_nome() %></td>
 				        <td><%= u.get_email() %></td>
 				        <td><%= u.get_telefone() %></td>
+				        <td><%= u.get_MediaAvaliacoes() %></td>
 				        <td><a class="btn btn-success" href="<%= "./EditarUsuario?id=" + u.get_id() %>">Editar</a></td> 
 				        <td><a class="btn btn-primary" href="<%= "./ListarVeiculos?usuarioId=" + u.get_id() %>">Visualizar Veículos</a></td> 
-				        <td><a class="btn btn-primary" href="<%= "./CriarCarona?usuarioId=" + u.get_id() %>">Criar Carona</a></td> 
+				        <td><a class="btn btn-primary" href="<%= "./CriarCarona?usuarioId=" + u.get_id() %>">Criar Carona</a></td>
 			        </tr>
 				<%
 					}

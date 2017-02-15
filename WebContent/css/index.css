@@ -53,3 +53,8 @@ body {
     color: #333;
     border: 1px solid #ddd;
 }
+
+.disabled {
+   pointer-events: none;
+   cursor: default;
+}
