@@ -104,10 +104,10 @@ public class Carona {
 	public int getMotoristaId() {
  		return motoristaId;
  	}
-		 
- 	public void setMotoristaId(int motoristaId) {
- 		this.motoristaId = motoristaId;
-	 }
+	
+	public void setMotoristaId(int motoristaId) {
+		this.motoristaId = motoristaId;
+	}
 	
 	@Override
 	public String toString(){
