@@ -104,6 +104,9 @@ public class GruposScript {
 		UsuariosFinder usuariosFinder = new UsuariosFinder();
 		UsuarioGateway u = usuariosFinder.find(emailUsuario);
 		
+		if(u == null)
+			throw new EntidadeNaoEncontradaException();
+		
 		Usuario_GrupoFinder associacaoFinder = new Usuario_GrupoFinder();
 		Usuario_GrupoGateway associacaoGateway = associacaoFinder.find(g.get_id(),u.get_id());
 		

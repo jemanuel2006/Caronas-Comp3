@@ -29,8 +29,6 @@ public class VeiculoFinder {
                 gateway = new VeiculoGateway(veiculoSet.getString("modelo"), veiculoSet.getString("placa"), veiculoSet.getString("cor"));
                 gateway.set_motoristaId(veiculoSet.getInt("usuario_id"));
                 gateway.set_id(id);
-			 } else {
-				 throw new EntidadeNaoEncontradaException();
 			 }
 			 
 			 return gateway;

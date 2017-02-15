@@ -57,8 +57,6 @@ public class UsuariosFinder {
                 Usuario u = new Usuario(usuarioSet.getString("nome"),usuarioSet.getString("email"), usuarioSet.getString("telefone"));
                 u.set_id(usuarioSet.getInt("id"));
                 gateway = new UsuarioGateway(u);
-			 } else {
-				 throw new EntidadeNaoEncontradaException();
 			 }
 			 
 			 return gateway;

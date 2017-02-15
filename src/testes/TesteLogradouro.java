@@ -14,39 +14,7 @@ import entidades.Grupo;
 import entidades.Logradouro;
 import persistencia.DatabaseConnector;
 
-public class TesteLogradouro {
-	
-	@Before
-	public void Setup(){
-		try{
-			DatabaseConnector db = new DatabaseConnector();
-			String criarBanco = "create database bancocaronascomp3_tests";
-			PreparedStatement ps = db.getConnection().prepareStatement(criarBanco);
-			ps.executeUpdate();
-			
-			String criarTabelaCaronas = "create table bancocaronascomp3_tests.usuario(id int not null auto_increment, cep varchar(500) not null, cidade varchar(500) not null, estado varchar(500) not null, distrito varchar(500) not null, endereco varchar(1000) not null, numero int not null);";
-			ps = db.getConnection().prepareStatement(criarTabelaCaronas);
-			ps.executeUpdate();
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-		}
-	}
-	
-	@After
-	public void Destroy(){
-			try{
-				DatabaseConnector db = new DatabaseConnector();
-				String removerBanco = "drop database bancocaronascomp3_tests;";
-				PreparedStatement ps = db.getConnection().prepareStatement(removerBanco);
-				ps.executeUpdate();
-			}
-			catch(Exception ex){
-				ex.printStackTrace();
-			}
-		
-	}
-	
+public class TesteLogradouro extends TestBase{
 	@Test
 	public void CriarLogradouroComTodosOsCampos() throws Exception{
 		String _cep = "26032730";
@@ -57,7 +25,7 @@ public class TesteLogradouro {
 		int _numero = 133;
 		
 		LogradouroScript lts = new LogradouroScript();
-		int id = lts.CriarLogradouro(_cep, _cidade, _estado, _distrito, _endereco, _numero);
+		int id = lts.CriarLogradouro(_cep, _estado, _cidade, _distrito, _endereco, _numero);
 		Logradouro l = lts.GetLogradouro(id);
 		
 		Assert.assertEquals(l.get_cep(), _cep);
@@ -75,7 +43,7 @@ public class TesteLogradouro {
 		String _estado = "rj";
 		String _distrito = "Ponto Chic";
 		String _endereco = "Estrada Velha de São José";
-		int _numero = (Integer) null;
+		int _numero = 0;
 		
 		lts.CriarLogradouro(_cep, _cidade, _estado, _distrito, _endereco, _numero);
 	}

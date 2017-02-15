@@ -29,21 +29,12 @@ public class MotoristaGateway {
 		DatabaseConnector dbConn = new DatabaseConnector();
 		 try {
 			 Connection s = dbConn.getConnection();
-			 insertStatement = s.prepareStatement(_insertStatement, Statement.RETURN_GENERATED_KEYS);
+			 insertStatement = s.prepareStatement(_insertStatement);
 			 insertStatement.setInt(1, _id);
 			 
 			 int affectedRows = insertStatement.executeUpdate();
 			 if (affectedRows == 0) {
 			    throw new SQLException("Ocorreu um erro ao executar a criação do motorista.");
-			 }
-			
-			 try (ResultSet generatedKeys = insertStatement.getGeneratedKeys()) {
-			    if (generatedKeys.next()) {
-			        this.set_id(generatedKeys.getInt(1));
-			    }
-			    else {
-			        throw new SQLException("Ocorreu um erro ao adquirir o id do novo motorista.");
-			    }
 			 }
 			 
 			 return get_id();

@@ -1,6 +1,7 @@
 package testes;
 
 import java.sql.PreparedStatement;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -8,66 +9,27 @@ import org.junit.Before;
 import org.junit.Test;
 
 import TransactionScripts.GruposScript;
+import TransactionScripts.UsuariosScript;
 import entidades.Grupo;
+import entidades.Usuario;
+import excecoes.EntidadeNaoEncontradaException;
 import persistencia.DatabaseConnector;
 
-public class TestesGrupo {
-	@Before
-	public void setup(){
-		try{
-			DatabaseConnector db = new DatabaseConnector();
-			String criarBanco = "create database bancocaronascomp3_tests";
-			PreparedStatement ps = db.getConnection().prepareStatement(criarBanco);
-			ps.executeUpdate();
-			
-			DatabaseConnector.connString = "jdbc:mysql://127.0.0.1:3306/bancocaronascomp3_tests";
-			db = new DatabaseConnector();
-			
-			String usarBanco = "use bancocaronascomp3_tests";
-			ps = db.getConnection().prepareStatement(usarBanco);
-			ps.executeUpdate(); 
-			
-			String criarTabelaUsuarios = "create table bancocaronascomp3_tests.usuario(id int not null auto_increment,nome varchar(500) not null,email varchar(500) not null,telefone varchar(500) not null,primary key (id));";
-			ps = db.getConnection().prepareStatement(criarTabelaUsuarios);
-			ps.executeUpdate();
-			
-			String criarTabelaGrupos = "create table bancocaronascomp3_tests.grupo(id int not null auto_increment,nome varchar(500) not null,descricao varchar(500) not null,regras varchar(5000) not null,limite int not null,primary key (id))";
-			ps = db.getConnection().prepareStatement(criarTabelaGrupos);
-			ps.executeUpdate();
-			
-			String inserirUsuarioFake = "insert into bancocaronascomp3_tests.usuario(nome,email,telefone) values ('usuario','a@a.com','846723623')";
-			ps = db.getConnection().prepareStatement(inserirUsuarioFake);
-			ps.executeUpdate();
-			
-			String criarTabelaUsuario_Grupo = "create table usuario_grupo(id int not null auto_increment,grupo_id int not null,usuario_id int not null,primary key (id),foreign key (grupo_id) REFERENCES grupo(id),foreign key (usuario_id) REFERENCES usuario(id));";
-			ps = db.getConnection().prepareStatement(criarTabelaUsuario_Grupo);
-			ps.executeUpdate();
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-		}
-	}
-	
-	@After
-	public void destroy(){
-		try{
-			DatabaseConnector db = new DatabaseConnector();
-			String removerBanco = "drop database bancocaronascomp3_tests;";
-			PreparedStatement ps = db.getConnection().prepareStatement(removerBanco);
-			ps.executeUpdate();
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-		}
-	}
-	
+public class TestesGrupo extends TestBase{
 	@Test
 	public void CriarGrupoComTodosOsCampos() throws Exception{
+		UsuariosScript uts = new UsuariosScript();
+		String unome = "usuario teste";
+		String uemail = "teste@fake.com";
+		String utelefone = "814213612";
+		
+		uts.CriarUsuario(unome,uemail,utelefone);
+		
 		String nome = "grupo teste";
 		String desc = "descrição";
 		String regras = "regras";
 		int limite = 3;
-		String emailCriador = "a@a.com";
+		String emailCriador = "teste@fake.com";
 		
 		GruposScript gts = new GruposScript();
 		int id = gts.CriarGrupo(emailCriador, nome, desc, regras, limite);
@@ -78,5 +40,72 @@ public class TestesGrupo {
 		Assert.assertEquals(g.get_regras(), regras);
 		Assert.assertEquals(g.get_limite(), limite);
 		Assert.assertEquals(g.get_membros().iterator().next().get_email(), emailCriador);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void CriarGrupoComLimiteAcima() throws Exception{
+		String nome = "grupo teste";
+		String desc = "descrição";
+		String regras = "regras";
+		int limite = 576437634;
+		String emailCriador = "a@a.com";
+		
+		GruposScript gts = new GruposScript();
+		gts.CriarGrupo(emailCriador, nome, desc, regras, limite);
+	}
+	
+	@Test
+	public void AdicionarMembroEmGrupo() throws Exception{
+		UsuariosScript uts = new UsuariosScript();
+		String unome = "usuario teste";
+		String uemail = "teste@fake.com";
+		String utelefone = "814213612";
+		
+		uts.CriarUsuario(unome,uemail,utelefone);
+		
+		String unome2 = "usuario teste 2";
+		String uemail2 = "teste2@fake.com";
+		String utelefone2 = "96412356";
+		
+		uts.CriarUsuario(unome2,uemail2,utelefone2);
+		
+		String nome = "grupo teste";
+		String desc = "descrição";
+		String regras = "regras";
+		int limite = 3;
+		String emailCriador = "teste@fake.com";
+		
+		GruposScript gts = new GruposScript();
+		int id = gts.CriarGrupo(emailCriador, nome, desc, regras, limite);
+		
+		gts.AdicionarUsuarioEmGrupo(uemail2, id);
+		
+		Grupo grupo = gts.GetGrupo(id);
+		
+		Assert.assertEquals(2, grupo.get_membros().size());
+		Iterator<Usuario> it = grupo.get_membros().iterator();
+		it.next();
+		Assert.assertEquals(uemail2, it.next().get_email());
+	}
+	
+	@Test(expected=EntidadeNaoEncontradaException.class)
+	public void AdicionarMembroInexistenteEmGrupo() throws Exception{
+		UsuariosScript uts = new UsuariosScript();
+		String unome = "usuario teste";
+		String uemail = "teste@fake.com";
+		String utelefone = "814213612";
+		
+		uts.CriarUsuario(unome,uemail,utelefone);
+		
+		String nome = "grupo teste";
+		String desc = "descrição";
+		String regras = "regras";
+		int limite = 3;
+		String emailCriador = "teste@fake.com";
+		
+		GruposScript gts = new GruposScript();
+		int id = gts.CriarGrupo(emailCriador, nome, desc, regras, limite);
+		
+		gts.AdicionarUsuarioEmGrupo("emailinexistente@fake.com", id);
 	}
 }

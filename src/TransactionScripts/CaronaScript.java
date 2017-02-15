@@ -36,7 +36,7 @@ public class CaronaScript {
 		
 		for(CaronaGateway carona: caronas){
 			//Verificar se compara data/hora certo
-			if(carona.get_motoristaId() == motoristaId && carona.getDia() == dia && carona.getHora_saida() == hora_saida){
+			if(carona.get_motoristaId() == motoristaId && DataIgual(carona.getDia(),dia) && DataIgual(carona.getHora_saida(), hora_saida)){
 				throw new CaronaNoMesmoHorarioException();
 			}
 		}
@@ -210,7 +210,7 @@ public class CaronaScript {
 		}
 		
 		Carona carona = this.GetCarona(caronaId);
-		if(carona.GetParadas().size() > Veiculo.maxVagas){
+		if(carona.GetParadas().size() >= Veiculo.maxVagas){
 			throw new LimiteVagasAtingidoException();
 		}
 		
@@ -366,5 +366,10 @@ public class CaronaScript {
 		Carona c = this.GetCarona(caronaId);
 		
 		return c.GetParadas().isEmpty();
+	}
+	
+	@SuppressWarnings("deprecation")
+	private boolean DataIgual(Date date1, Date date2){
+		return date1.getYear() == date2.getYear() && date1.getDay() == date2.getDay() && date1.getMonth() == date2.getMonth();
 	}
 }
