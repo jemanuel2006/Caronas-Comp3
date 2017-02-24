@@ -12,9 +12,9 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 
-import TransactionScripts.CaronaScript;
-import TransactionScripts.LogradouroScript;
-import TransactionScripts.MotoristaScript;
+import TransactionScripts.CriarCaronaScript;
+import TransactionScripts.GetLogradourosScript;
+import TransactionScripts.GetMotoristaScript;
 import entidades.Motorista;
 import helpers.QueryStringHelper;
 
@@ -48,9 +48,9 @@ public class CrCriarCarona extends HttpServlet {
 			int _logradouroOrigemId = Integer.parseInt(request.getParameter("_origemId"));
 			int _logradouroDestinoId = Integer.parseInt(request.getParameter("_destinoId"));
 			
-			CaronaScript ts = new CaronaScript();
+			CriarCaronaScript ts = new CriarCaronaScript(_veiculoId, _motoristaId, _dia, _hora_saida, _logradouroOrigemId, _logradouroDestinoId);
 			
-			int id = ts.CriarCarona(_veiculoId, _motoristaId, _dia, _hora_saida, _logradouroOrigemId, _logradouroDestinoId);
+			int id = ts.execute();
 			response.sendRedirect("./EditarCarona?id=" + id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,12 +62,12 @@ public class CrCriarCarona extends HttpServlet {
 		int usuarioId = Integer.parseInt(params.get("usuarioId"));
 		
     	try{
-    		MotoristaScript ts = new MotoristaScript();
-    		Motorista m = ts.GetMotorista(usuarioId);
+    		GetMotoristaScript ts = new GetMotoristaScript(usuarioId);
+    		Motorista m = ts.execute();
     		
-    		LogradouroScript lts = new LogradouroScript();
+    		GetLogradourosScript lts = new GetLogradourosScript();
     		
-    		request.setAttribute("logradouros", lts.GetLogradouros());
+    		request.setAttribute("logradouros", lts.execute());
     		request.setAttribute("veiculos", m.get_veiculos());
     		request.setAttribute("usuarioId", usuarioId);
     	}

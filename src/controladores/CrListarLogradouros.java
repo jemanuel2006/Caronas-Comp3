@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.GruposScript;
-import TransactionScripts.LogradouroScript;
-import entidades.Grupo;
+import TransactionScripts.GetLogradourosScript;
 import entidades.Logradouro;
 
 /**
@@ -38,8 +36,8 @@ public class CrListarLogradouros extends HttpServlet {
 		Collection<Logradouro> logradouros = new ArrayList<Logradouro>();
 		
 		try {
-			LogradouroScript ts = new LogradouroScript();
-			logradouros = ts.GetLogradouros();
+			GetLogradourosScript ts = new GetLogradourosScript();
+			logradouros = ts.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

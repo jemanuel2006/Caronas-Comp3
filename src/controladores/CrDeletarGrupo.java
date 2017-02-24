@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.GruposScript;
+import TransactionScripts.DeletarGrupoScript;
 import entidades.Grupo;
 import helpers.QueryStringHelper;
 
@@ -26,8 +26,8 @@ public class CrDeletarGrupo extends HttpServlet {
 			Map<String,String> params = QueryStringHelper.getQueryMap(request.getQueryString());
 			int id = Integer.parseInt(params.get("id"));
 			
-			GruposScript script = new GruposScript();
-			script.DeletarGrupo(id);
+			DeletarGrupoScript script = new DeletarGrupoScript(id);
+			script.execute();
 			
 			response.sendRedirect("./ListarGrupo");
 		} catch (Exception e) {

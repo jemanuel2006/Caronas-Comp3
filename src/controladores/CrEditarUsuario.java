@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.UsuariosScript;
+import TransactionScripts.EditarUsuarioScript;
+import TransactionScripts.GetUsuarioScript;
 import entidades.Usuario;
 import helpers.QueryStringHelper;
 
@@ -29,8 +30,8 @@ public class CrEditarUsuario extends HttpServlet {
 			Map<String,String> params = QueryStringHelper.getQueryMap(request.getQueryString());
 			int id = Integer.parseInt(params.get("id"));
 			
-			UsuariosScript script = new UsuariosScript();
-			Usuario u = script.GetUsuario(id);
+			GetUsuarioScript script = new GetUsuarioScript(id);
+			Usuario u = script.execute();
 			
 			request.setAttribute("_id", id);
 			request.setAttribute("_nome", u.get_nome());
@@ -50,8 +51,8 @@ public class CrEditarUsuario extends HttpServlet {
 			String telefone = request.getParameter("_telefone");
 			int id = Integer.parseInt(request.getParameter("_id"));
 			
-			UsuariosScript script = new UsuariosScript();
-			script.EditarUsuario(id, nome, telefone);
+			EditarUsuarioScript script = new EditarUsuarioScript(id, nome, telefone);
+			script.execute();
 			
 			response.sendRedirect("./EditarUsuario?id=" + id);
 		} catch (Exception e) {

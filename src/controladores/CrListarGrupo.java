@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.GruposScript;
-import TransactionScripts.UsuariosScript;
+import TransactionScripts.GetAllGruposScript;
 import entidades.Grupo;
 import entidades.Usuario;
 
@@ -38,8 +37,8 @@ public class CrListarGrupo extends HttpServlet {
 		Collection<Grupo> grupos = new ArrayList<Grupo>();
 		
 		try {
-			GruposScript script = new GruposScript();
-			grupos = script.GetAllGrupos();
+			GetAllGruposScript script = new GetAllGruposScript();
+			grupos = script.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

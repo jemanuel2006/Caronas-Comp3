@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.CaronaScript;
-import TransactionScripts.LogradouroScript;
+import TransactionScripts.CriarLogradouroScript;
 
 /**
  * Servlet implementation class CrCriarLogradouro
@@ -48,8 +47,8 @@ public class CrCriarLogradouro extends HttpServlet {
 		int numero = Integer.parseInt(request.getParameter("numero"));
 		
 		try{
-			LogradouroScript ts = new LogradouroScript();
-			ts.CriarLogradouro(cep, estado, cidade, distrito, rua, numero);
+			CriarLogradouroScript ts = new CriarLogradouroScript(cep, estado, cidade, distrito, rua, numero);
+			ts.execute();
 			response.sendRedirect("./ListarLogradouros");
 		}
 		catch(Exception ex){

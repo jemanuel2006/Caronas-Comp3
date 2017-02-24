@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.UsuariosScript;
+import TransactionScripts.GetAllUsuariosScript;
 import entidades.Usuario;
 
 
@@ -27,8 +27,8 @@ public class CrListarUsuarios extends HttpServlet {
 		Collection<Usuario> usuarios = new ArrayList<Usuario>();
 		
 		try {
-			UsuariosScript script = new UsuariosScript();
-			usuarios = script.GetAllUsuarios();
+			GetAllUsuariosScript script = new GetAllUsuariosScript();
+			usuarios = script.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

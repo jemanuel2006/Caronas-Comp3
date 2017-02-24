@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.CaronaScript;
-import TransactionScripts.LogradouroScript;
-import TransactionScripts.MotoristaScript;
+import TransactionScripts.AdicionarUsuarioEmCaronaScript;
+import TransactionScripts.GetCaronasDisponiveisScript;
+import TransactionScripts.GetLogradourosScript;
 
 /**
  * Servlet implementation class CrCriarParticipacaoCarona
@@ -33,10 +33,10 @@ public class CrCriarParticipacaoCarona extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
-			CaronaScript cts = new CaronaScript();
-			LogradouroScript lts = new LogradouroScript();
-			request.setAttribute("caronas", cts.GetCaronasDisponiveis());
-			request.setAttribute("logradouros", lts.GetLogradouros());
+			GetCaronasDisponiveisScript cts = new GetCaronasDisponiveisScript();
+			GetLogradourosScript lts = new GetLogradourosScript();
+			request.setAttribute("caronas", cts.execute());
+			request.setAttribute("logradouros", lts.execute());
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
@@ -54,8 +54,8 @@ public class CrCriarParticipacaoCarona extends HttpServlet {
 		int logradouroId = Integer.parseInt(request.getParameter("_logradouroId"));
 		
 		try {
-			CaronaScript cts = new CaronaScript();
-			cts.AdicionarUsuarioEmCarona(caronaId, email, logradouroId);
+			AdicionarUsuarioEmCaronaScript cts = new AdicionarUsuarioEmCaronaScript(caronaId, email, logradouroId);
+			cts.execute();
 			response.sendRedirect("./VisualizarParticipantes?caronaId=" + caronaId);
 		} catch (Exception e) {
 			e.printStackTrace();

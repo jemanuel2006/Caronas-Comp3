@@ -1,29 +1,27 @@
 package testes;
 
-import java.sql.PreparedStatement;
 import java.util.Iterator;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-import TransactionScripts.GruposScript;
-import TransactionScripts.UsuariosScript;
+import TransactionScripts.AdicionarUsuarioEmGrupoScript;
+import TransactionScripts.CriarGrupoScript;
+import TransactionScripts.CriarUsuarioScript;
+import TransactionScripts.GetGrupoScript;
 import entidades.Grupo;
 import entidades.Usuario;
 import excecoes.EntidadeNaoEncontradaException;
-import persistencia.DatabaseConnector;
 
 public class TestesGrupo extends TestBase{
 	@Test
 	public void CriarGrupoComTodosOsCampos() throws Exception{
-		UsuariosScript uts = new UsuariosScript();
 		String unome = "usuario teste";
 		String uemail = "teste@fake.com";
 		String utelefone = "814213612";
 		
-		uts.CriarUsuario(unome,uemail,utelefone);
+		CriarUsuarioScript uts = new CriarUsuarioScript(unome,uemail,utelefone);
+		uts.execute();
 		
 		String nome = "grupo teste";
 		String desc = "descrição";
@@ -31,9 +29,11 @@ public class TestesGrupo extends TestBase{
 		int limite = 3;
 		String emailCriador = "teste@fake.com";
 		
-		GruposScript gts = new GruposScript();
-		int id = gts.CriarGrupo(emailCriador, nome, desc, regras, limite);
-		Grupo g = gts.GetGrupo(id);
+		CriarGrupoScript gts = new CriarGrupoScript(emailCriador, nome, desc, regras, limite);
+		int id = gts.execute();
+		
+		GetGrupoScript ggs = new GetGrupoScript(id);
+		Grupo g = ggs.execute();
 		
 		Assert.assertEquals(g.get_nome(), nome);
 		Assert.assertEquals(g.get_descricao(), desc);
@@ -50,24 +50,25 @@ public class TestesGrupo extends TestBase{
 		int limite = 576437634;
 		String emailCriador = "a@a.com";
 		
-		GruposScript gts = new GruposScript();
-		gts.CriarGrupo(emailCriador, nome, desc, regras, limite);
+		CriarGrupoScript gts = new CriarGrupoScript(emailCriador, nome, desc, regras, limite);
+		gts.execute();
 	}
 	
 	@Test
 	public void AdicionarMembroEmGrupo() throws Exception{
-		UsuariosScript uts = new UsuariosScript();
 		String unome = "usuario teste";
 		String uemail = "teste@fake.com";
 		String utelefone = "814213612";
-		
-		uts.CriarUsuario(unome,uemail,utelefone);
+
+		CriarUsuarioScript uts = new CriarUsuarioScript(unome,uemail,utelefone);
+		uts.execute();
 		
 		String unome2 = "usuario teste 2";
 		String uemail2 = "teste2@fake.com";
 		String utelefone2 = "96412356";
 		
-		uts.CriarUsuario(unome2,uemail2,utelefone2);
+		uts = new CriarUsuarioScript(unome2,uemail2,utelefone2);
+		uts.execute();
 		
 		String nome = "grupo teste";
 		String desc = "descrição";
@@ -75,12 +76,14 @@ public class TestesGrupo extends TestBase{
 		int limite = 3;
 		String emailCriador = "teste@fake.com";
 		
-		GruposScript gts = new GruposScript();
-		int id = gts.CriarGrupo(emailCriador, nome, desc, regras, limite);
+		CriarGrupoScript gts = new CriarGrupoScript(emailCriador, nome, desc, regras, limite);
+		int id = gts.execute();
 		
-		gts.AdicionarUsuarioEmGrupo(uemail2, id);
+		AdicionarUsuarioEmGrupoScript augs = new AdicionarUsuarioEmGrupoScript(uemail2, id);
+		augs.execute();
 		
-		Grupo grupo = gts.GetGrupo(id);
+		GetGrupoScript ggs = new GetGrupoScript(id);
+		Grupo grupo = ggs.execute();
 		
 		Assert.assertEquals(2, grupo.get_membros().size());
 		Iterator<Usuario> it = grupo.get_membros().iterator();
@@ -90,12 +93,12 @@ public class TestesGrupo extends TestBase{
 	
 	@Test(expected=EntidadeNaoEncontradaException.class)
 	public void AdicionarMembroInexistenteEmGrupo() throws Exception{
-		UsuariosScript uts = new UsuariosScript();
 		String unome = "usuario teste";
 		String uemail = "teste@fake.com";
 		String utelefone = "814213612";
-		
-		uts.CriarUsuario(unome,uemail,utelefone);
+
+		CriarUsuarioScript uts = new CriarUsuarioScript(unome,uemail,utelefone);
+		uts.execute();
 		
 		String nome = "grupo teste";
 		String desc = "descrição";
@@ -103,9 +106,10 @@ public class TestesGrupo extends TestBase{
 		int limite = 3;
 		String emailCriador = "teste@fake.com";
 		
-		GruposScript gts = new GruposScript();
-		int id = gts.CriarGrupo(emailCriador, nome, desc, regras, limite);
+		CriarGrupoScript gts = new CriarGrupoScript(emailCriador, nome, desc, regras, limite);
+		int id = gts.execute();
 		
-		gts.AdicionarUsuarioEmGrupo("emailinexistente@fake.com", id);
+		AdicionarUsuarioEmGrupoScript augs = new AdicionarUsuarioEmGrupoScript("emailinexistente@fake.com", id);
+		augs.execute();
 	}
 }

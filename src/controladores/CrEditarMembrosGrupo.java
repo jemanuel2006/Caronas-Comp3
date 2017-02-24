@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.GruposScript;
-import TransactionScripts.UsuariosScript;
+import TransactionScripts.AdicionarUsuarioEmGrupoScript;
+import TransactionScripts.GetGrupoScript;
 import entidades.Grupo;
 import entidades.Usuario;
 import helpers.QueryStringHelper;
@@ -42,8 +42,8 @@ public class CrEditarMembrosGrupo extends HttpServlet {
 		int id = Integer.parseInt(params.get("id"));
 		
 		try {
-			GruposScript script = new GruposScript();
-			Grupo grupo = script.GetGrupo(id);
+			GetGrupoScript script = new GetGrupoScript(id);
+			Grupo grupo = script.execute();
 			usuarios = grupo.get_membros();
 			
 			request.setAttribute("max", grupo.get_limite());
@@ -65,8 +65,8 @@ public class CrEditarMembrosGrupo extends HttpServlet {
 			String email = request.getParameter("_email");
 			int idGrupo = Integer.parseInt(request.getParameter("_id"));
 			
-			GruposScript ts = new GruposScript();
-			ts.AdicionarUsuarioEmGrupo(email, idGrupo);
+			AdicionarUsuarioEmGrupoScript ts = new AdicionarUsuarioEmGrupoScript(email, idGrupo);
+			ts.execute();
 			
 			response.sendRedirect("./EditarMembrosGrupo?id=" + idGrupo);
 		} catch (Exception e) {

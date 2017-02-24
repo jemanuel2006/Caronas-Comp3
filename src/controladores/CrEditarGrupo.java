@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.GruposScript;
+import TransactionScripts.EditarGrupoScript;
+import TransactionScripts.GetGrupoScript;
 import entidades.Grupo;
 import helpers.QueryStringHelper;
 
@@ -29,8 +30,8 @@ public class CrEditarGrupo extends HttpServlet {
 			Map<String,String> params = QueryStringHelper.getQueryMap(request.getQueryString());
 			int id = Integer.parseInt(params.get("id"));
 			
-			GruposScript script = new GruposScript();
-			Grupo g = script.GetGrupo(id);
+			GetGrupoScript script = new GetGrupoScript(id);
+			Grupo g = script.execute();
 			
 			request.setAttribute("_id", id);
 			request.setAttribute("_nome", g.get_nome());
@@ -52,8 +53,8 @@ public class CrEditarGrupo extends HttpServlet {
 			int limite = Integer.parseInt(request.getParameter("_limite"));
 			int id = Integer.parseInt(request.getParameter("_id"));
 			
-			GruposScript script = new GruposScript();
-			script.EditarGrupo(id, nome, descricao, limite);
+			EditarGrupoScript script = new EditarGrupoScript(id, nome, descricao, limite);
+			script.execute();
 			
 			response.sendRedirect("./EditarGrupo?id=" + id);
 		} catch (Exception e) {

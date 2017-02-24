@@ -1,8 +1,6 @@
 package controladores;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -12,13 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.CaronaScript;
-import TransactionScripts.LogradouroScript;
-import TransactionScripts.MotoristaScript;
+import TransactionScripts.GetCaronaScript;
+import TransactionScripts.RemoverUsuarioDeCaronaScript;
 import entidades.Carona;
-import entidades.Motorista;
-import entidades.Parada;
-import entidades.Usuario;
 import helpers.QueryStringHelper;
 
 /**
@@ -44,8 +38,8 @@ public class CrVisualizarParticipantes extends HttpServlet {
 			Map<String,String> params = QueryStringHelper.getQueryMap(request.getQueryString());
 			int id = Integer.parseInt(params.get("caronaId"));
 			
-			CaronaScript cts = new CaronaScript();
-			Carona carona = cts.GetCarona(id);
+			GetCaronaScript cts = new GetCaronaScript(id);
+			Carona carona = cts.execute();
 			
 			request.setAttribute("paradas", carona.GetParadas());
     		request.setAttribute("caronaId", id);
@@ -67,8 +61,8 @@ public class CrVisualizarParticipantes extends HttpServlet {
 			int paradaId = Integer.parseInt(params.get("paradaId"));
 			int caronaId = Integer.parseInt(params.get("caronaId"));
 			
-			CaronaScript cts = new CaronaScript();
-			cts.RemoverUsuarioDeCarona(paradaId);
+			RemoverUsuarioDeCaronaScript cts = new RemoverUsuarioDeCaronaScript(paradaId);
+			cts.execute();
 			response.sendRedirect("./VisualizarParticipantes?caronaId=" + caronaId);
 		}
 		catch(Exception ex){

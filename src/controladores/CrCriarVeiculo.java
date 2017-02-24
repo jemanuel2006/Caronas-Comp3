@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.MotoristaScript;
+import TransactionScripts.AdicionarVeiculoScript;
 import helpers.QueryStringHelper;
 
 /**
@@ -49,8 +49,8 @@ public class CrCriarVeiculo extends HttpServlet {
 		int usuarioId = Integer.parseInt(request.getParameter("_id"));
 		
 		try {
-			MotoristaScript ts = new MotoristaScript();
-			int id = ts.AdicionarVeiculo(usuarioId, modelo, placa, cor);
+			AdicionarVeiculoScript ts = new AdicionarVeiculoScript(usuarioId, modelo, placa, cor);
+			int id = ts.execute();
 			response.sendRedirect("./EditarVeiculo?id=" + id + "&usuarioId=" + usuarioId);
 		} catch (Exception e) {
 			e.printStackTrace();

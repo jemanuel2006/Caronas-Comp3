@@ -12,11 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.GruposScript;
-import TransactionScripts.MotoristaScript;
-import entidades.Grupo;
+import TransactionScripts.GetMotoristaScript;
 import entidades.Motorista;
-import entidades.Usuario;
 import entidades.Veiculo;
 import helpers.QueryStringHelper;
 
@@ -44,8 +41,8 @@ public class CrListarVeiculos extends HttpServlet {
 		int id = Integer.parseInt(params.get("usuarioId"));
 		
 		try {
-			MotoristaScript ts = new MotoristaScript();
-			Motorista motorista = ts.GetMotorista(id);
+			GetMotoristaScript ts = new GetMotoristaScript(id);
+			Motorista motorista = ts.execute();
 			veiculos = motorista.get_veiculos();
 			request.setAttribute("_nomeMotorista", motorista.get_nome());
 		} catch (Exception e) {

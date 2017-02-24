@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.UsuariosScript;
-import entidades.Usuario;
-import persistencia.UsuarioGateway;
+import TransactionScripts.CriarUsuarioScript;
 
 
 @WebServlet("/CriarUsuario")
@@ -37,10 +35,10 @@ public class CrCriarUsuario extends HttpServlet {
 		_email = request.getParameter("_email");
 		_telefone = request.getParameter("_telefone");
 		
-		UsuariosScript ts = new UsuariosScript();
+		CriarUsuarioScript ts = new CriarUsuarioScript(_nome, _email, _telefone);
 		
 		try {
-			int id = ts.CriarUsuario(_nome, _email, _telefone);
+			int id = ts.execute();
 			response.sendRedirect("./EditarUsuario?id=" + id);
 		} catch (Exception e) {
 			e.printStackTrace();

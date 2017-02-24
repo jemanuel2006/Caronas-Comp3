@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.AvaliacaoScript;
-import TransactionScripts.CaronaScript;
+import TransactionScripts.AvaliarUsuarioScript;
+import TransactionScripts.FinalizarCaronaScript;
+import TransactionScripts.GetCaronaScript;
 import entidades.Carona;
 import entidades.Parada;
 import entidades.Usuario;
@@ -44,8 +45,8 @@ public class CrFinalizarCarona extends HttpServlet {
 		Collection<Usuario> usuarios = new ArrayList<Usuario>();
 		
 		try {
-			CaronaScript cts = new CaronaScript();
-			Carona carona = cts.GetCarona(id);
+			GetCaronaScript cts = new GetCaronaScript(id);
+			Carona carona = cts.execute();
 			
 			for(Parada p : carona.GetParadas()){
 				usuarios.add(p.get_usuario());
@@ -68,8 +69,8 @@ public class CrFinalizarCarona extends HttpServlet {
 		Enumeration<String> parameterNames = request.getParameterNames();
 		try{
 			int id = Integer.parseInt(request.getParameter("_id"));
-			CaronaScript cts = new CaronaScript();
-			cts.FinalizarCarona(id);
+			FinalizarCaronaScript cts = new FinalizarCaronaScript(id);
+			cts.execute();
 			while(parameterNames.hasMoreElements()){
 				String paramName = parameterNames.nextElement();
 				
@@ -78,8 +79,8 @@ public class CrFinalizarCarona extends HttpServlet {
 					int usuarioId = Integer.parseInt(ids[1]);
 					int avaliacao = Integer.parseInt(request.getParameter(paramName));
 					
-					AvaliacaoScript ats = new AvaliacaoScript();
-					ats.AvaliarUsuario(usuarioId, avaliacao);
+					AvaliarUsuarioScript ats = new AvaliarUsuarioScript(usuarioId, avaliacao);
+					ats.execute();
 				}
 			}
 			

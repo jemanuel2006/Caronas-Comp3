@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.CaronaScript;
-import TransactionScripts.GruposScript;
+import TransactionScripts.GetCaronasScript;
 import entidades.Carona;
-import entidades.Grupo;
 
 /**
  * Servlet implementation class CrListarCaronas
@@ -38,8 +36,8 @@ public class CrListarCaronas extends HttpServlet {
 		Collection<Carona> caronas = new ArrayList<Carona>();
 		
 		try {
-			CaronaScript script = new CaronaScript();
-			caronas = script.GetCaronas();
+			GetCaronasScript script = new GetCaronasScript();
+			caronas = script.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

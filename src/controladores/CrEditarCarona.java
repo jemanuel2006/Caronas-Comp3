@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.CaronaScript;
-import TransactionScripts.LogradouroScript;
-import TransactionScripts.MotoristaScript;
+import TransactionScripts.EditarCaronaScript;
+import TransactionScripts.GetCaronaScript;
+import TransactionScripts.GetLogradourosScript;
+import TransactionScripts.GetMotoristaByVeiculo;
+import TransactionScripts.PodeAlterarCaronaScript;
 import entidades.Carona;
 import entidades.Motorista;
 import helpers.QueryStringHelper;
@@ -42,12 +44,16 @@ public class CrEditarCarona extends HttpServlet {
 			Map<String,String> params = QueryStringHelper.getQueryMap(request.getQueryString());
 			int id = Integer.parseInt(params.get("id"));
 			
-			CaronaScript cts = new CaronaScript();
-			LogradouroScript lts = new LogradouroScript();
-			MotoristaScript mts = new MotoristaScript();
-			Carona carona = cts.GetCarona(id);
-			boolean podeAlterarCarona = cts.PodeAlterarCarona(id);
-			Motorista motorista = mts.GetMotoristaByVeiculo(carona.get_veiculo().get_id());
+			PodeAlterarCaronaScript cts = new PodeAlterarCaronaScript(id);
+			GetCaronaScript caronaScript = new GetCaronaScript(id);
+			
+			Carona carona = caronaScript.execute();
+			boolean podeAlterarCarona = cts.execute();
+			
+			GetMotoristaByVeiculo mts = new GetMotoristaByVeiculo(carona.get_veiculo().get_id());
+			Motorista motorista = mts.execute();
+			
+			GetLogradourosScript lts = new GetLogradourosScript();
 			
 			request.setAttribute("usuarioId", motorista.get_id());
 			request.setAttribute("veiculoId", carona.get_veiculo().get_id());
@@ -55,7 +61,7 @@ public class CrEditarCarona extends HttpServlet {
 			request.setAttribute("destinoId", carona.get_destino().get_id());
 			request.setAttribute("hora_saida", carona.getHora_saida());
 			request.setAttribute("dia", carona.getDia());
-			request.setAttribute("logradouros", lts.GetLogradouros());
+			request.setAttribute("logradouros", lts.execute());
     		request.setAttribute("veiculos", motorista.get_veiculos());
     		request.setAttribute("podeAlterarCarona", podeAlterarCarona);
     		request.setAttribute("_id", id);
@@ -81,9 +87,9 @@ public class CrEditarCarona extends HttpServlet {
 			int _logradouroOrigemId = Integer.parseInt(request.getParameter("_origemId"));
 			int _logradouroDestinoId = Integer.parseInt(request.getParameter("_destinoId"));
 			
-			CaronaScript ts = new CaronaScript();
+			EditarCaronaScript ts = new EditarCaronaScript(id, _motoristaId, _veiculoId, _dia, _hora_saida, _logradouroOrigemId, _logradouroDestinoId);
 			
-			ts.EditarCarona(id, _motoristaId, _veiculoId, _dia, _hora_saida, _logradouroOrigemId, _logradouroDestinoId);
+			ts.execute();
 			response.sendRedirect("./EditarCarona?id=" + id);
 		} catch (Exception e) {
 			e.printStackTrace();

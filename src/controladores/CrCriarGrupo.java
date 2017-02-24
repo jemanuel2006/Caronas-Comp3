@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import TransactionScripts.GruposScript;
+import TransactionScripts.CriarGrupoScript;
 
 /**
  * Servlet implementation class CrCriarGrupo
@@ -42,10 +42,10 @@ public class CrCriarGrupo extends HttpServlet {
 		_limite = Integer.parseInt(request.getParameter("_limite"));
 		_emailCriador = request.getParameter("_emailCriador");
 		
-		GruposScript ts = new GruposScript();
+		CriarGrupoScript ts = new CriarGrupoScript(_emailCriador, _nome, _descricao, _regras, _limite);
 		
 		try {
-			int id = ts.CriarGrupo(_emailCriador, _nome, _descricao, _regras, _limite);
+			int id = ts.execute();
 			response.sendRedirect("./EditarGrupo?id=" + id);
 		} catch (Exception e) {
 			e.printStackTrace();
